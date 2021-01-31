@@ -1,50 +1,50 @@
-/palette-swap-backend/*.rbc
-/palette-swap-backend/capybara-*.html
-/palette-swap-backend/.rspec
-/palette-swap-backend/db/*.sqlite3
-/palette-swap-backend/db/*.sqlite3-journal
-/palette-swap-backend/db/*.sqlite3-[0-9]*
-/palette-swap-backend/public/system
-/palette-swap-backend/coverage/
-/palette-swap-backend/spec/tmp
-/palette-swap-backend/*.orig
-/palette-swap-backend/rerun.txt
-/palette-swap-backend/pickle-email-*.html
+*/*.rbc
+*/capybara-*.html
+*/.rspec
+*/db/*.sqlite3
+*/db/*.sqlite3-journal
+*/db/*.sqlite3-[0-9]*
+*/public/system
+*/coverage/
+*/spec/tmp
+*/*.orig
+*/rerun.txt
+*/pickle-email-*.html
 
-/palette-swap-backend/log/*
-/palette-swap-backend/tmp/*
-/palette-swap-backend/!/log/.keep
-/palette-swap-backend/!/tmp/.keep
+*/log/*
+*/tmp/*
+*/!/log/.keep
+*/!/tmp/.keep
 
-/palette-swap-backend/config/initializers/secret_token.rb
-/palette-swap-backend/config/master.key
-
-
-/palette-swap-backend/.env
-
-/palette-swap-backend/.bundle
-/palette-swap-backend/vendor/bundle
+*/config/initializers/secret_token.rb
+*/config/master.key
 
 
-/palette-swap-backend/.rvmrc
+*/.env
 
-/palette-swap-backend/vendor/assets/bower_components
-/palette-swap-backend/*.bowerrc
-/palette-swap-backend/bower.json
+*/.bundle
+*/vendor/bundle
 
-/palette-swap-backend/.powenv
 
-/palette-swap-backend/.byebug_history
+*/.rvmrc
 
-/palette-swap-backend/node_modules/
+*/vendor/assets/bower_components
+*/*.bowerrc
+*/bower.json
 
-/palette-swap-backend/public/packs
-/palette-swap-backend/public/packs-test
-/palette-swap-backend/public/assets
+*/.powenv
 
-/palette-swap-backend/yarn-error.log
-/palette-swap-backend/yarn-debug.log*
-/palette-swap-backend/.yarn-integrity
+*/.byebug_history
 
-/palette-swap-backend/storage/*
-/palette-swap-backend/!/storage/.keep
+*/node_modules/
+
+*/public/packs
+*/public/packs-test
+*/public/assets
+
+*/yarn-error.log
+*/yarn-debug.log*
+*/.yarn-integrity
+
+*/storage/*
+*/!/storage/.keep
