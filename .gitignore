@@ -1,67 +1,50 @@
-*.rbc
-capybara-*.html
-.rspec
-*/db/*.sqlite3
-*/db/*.sqlite3-journal
-*/db/*.sqlite3-[0-9]*
-*/public/system
-*/coverage/
-*/spec/tmp
-*.orig
-rerun.txt
-pickle-email-*.html
+/palette-swap-backend/*.rbc
+/palette-swap-backend/capybara-*.html
+/palette-swap-backend/.rspec
+/palette-swap-backend/db/*.sqlite3
+/palette-swap-backend/db/*.sqlite3-journal
+/palette-swap-backend/db/*.sqlite3-[0-9]*
+/palette-swap-backend/public/system
+/palette-swap-backend/coverage/
+/palette-swap-backend/spec/tmp
+/palette-swap-backend/*.orig
+/palette-swap-backend/rerun.txt
+/palette-swap-backend/pickle-email-*.html
 
-# Ignore all logfiles and tempfiles.
-*/log/*
-*/tmp/*
-!/log/.keep
-!/tmp/.keep
+/palette-swap-backend/log/*
+/palette-swap-backend/tmp/*
+/palette-swap-backend/!/log/.keep
+/palette-swap-backend/!/tmp/.keep
 
-# TODO Comment out this rule if you are OK with secrets being uploaded to the repo
-config/initializers/secret_token.rb
-config/master.key
+/palette-swap-backend/config/initializers/secret_token.rb
+/palette-swap-backend/config/master.key
 
-# Only include if you have production secrets in this file, which is no longer a Rails default
-# config/secrets.yml
 
-# dotenv
-# TODO Comment out this rule if environment variables can be committed
-.env
+/palette-swap-backend/.env
 
-## Environment normalization:
-/.bundle
-/vendor/bundle
+/palette-swap-backend/.bundle
+/palette-swap-backend/vendor/bundle
 
-# these should all be checked in to normalize the environment:
-# Gemfile.lock, .ruby-version, .ruby-gemset
 
-# unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
-.rvmrc
+/palette-swap-backend/.rvmrc
 
-# if using bower-rails ignore default bower_components path bower.json files
-*/vendor/assets/bower_components
-*.bowerrc
-bower.json
+/palette-swap-backend/vendor/assets/bower_components
+/palette-swap-backend/*.bowerrc
+/palette-swap-backend/bower.json
 
-# Ignore pow environment settings
-.powenv
+/palette-swap-backend/.powenv
 
-# Ignore Byebug command history file.
-.byebug_history
+/palette-swap-backend/.byebug_history
 
-# Ignore node_modules
-node_modules/
+/palette-swap-backend/node_modules/
 
-# Ignore precompiled javascript packs
-*/public/packs
-*/public/packs-test
-*/public/assets
+/palette-swap-backend/public/packs
+/palette-swap-backend/public/packs-test
+/palette-swap-backend/public/assets
 
-# Ignore yarn files
-*/yarn-error.log
-yarn-debug.log*
-.yarn-integrity
+/palette-swap-backend/yarn-error.log
+/palette-swap-backend/yarn-debug.log*
+/palette-swap-backend/.yarn-integrity
 
-# Ignore uploaded files in development
-*/storage/*
-!/storage/.keep
+/palette-swap-backend/storage/*
+/palette-swap-backend/!/storage/.keep
