@@ -3,6 +3,7 @@ class Patterns {
   constructor(name, style) {
     this.name = name;
     this.style = style;
+    this.patterns = [];
   }
 
   getPatterns = () => {
@@ -12,7 +13,10 @@ class Patterns {
   }
 
   renderPatterns = (patterns) => {
-    patterns.data.forEach(pattern => this.renderPatternDropdown(pattern))
+    patterns.data.forEach(pattern => {
+      this.patterns.push(pattern.attributes)
+      this.renderPatternDropdown(pattern)
+    })
   }
 
   renderPatternDropdown = (pattern) => {
@@ -23,4 +27,9 @@ class Patterns {
     select.appendChild(option)
   }
 
+  renderSelectedPattern = (selectedPattern) => {
+    console.log(selectedPattern)
+  }
+
 }
+
