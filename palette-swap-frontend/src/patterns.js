@@ -12,10 +12,6 @@ class Patterns {
   }
 
   renderPatterns = (patterns) => {
-    let select = document.createElement("select")
-    select.name = "patterns-dropdown"
-    select.id = "patterns-dropdown"
-    patternSelect.appendChild(select)
     patterns.data.forEach(pattern => this.renderPatternDropdown(pattern))
   }
 
