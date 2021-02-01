@@ -32,17 +32,23 @@ class Patterns {
 
   renderSelectedPattern = (selectedPatternId) => {
     let selectedPattern = this.patterns[selectedPatternId]
-    let defaultPalette = selectedPattern.palettes[0]
-    let patternStyleRaw = selectedPattern.style
-    let activePatternStyle = patternStyleRaw.replace(/COLOR1/g, defaultPalette.color1).replace(/COLOR2/g, defaultPalette.color2).replace(/COLOR3/g, defaultPalette.color3)
-    
+    let activePatternStyle = this.setSelectedPatternDefaultStyle(selectedPattern)
+
     let patternPreview = document.createElement("div")
     patternPreview.className = "pattern-preview"
     patternPreview.setAttribute("style", activePatternStyle)
+
     while(patternBox.firstChild) {
       patternBox.removeChild(patternBox.firstChild)
     }
     patternBox.appendChild(patternPreview)
   }
 
+  setSelectedPatternDefaultStyle = (selectedPattern) => {
+    let defaultPalette = selectedPattern.palettes[0]
+    let patternStyleRaw = selectedPattern.style
+    let activePatternStyle = patternStyleRaw.replace(/COLOR1/g, defaultPalette.color1).replace(/COLOR2/g, defaultPalette.color2).replace(/COLOR3/g, defaultPalette.color3)
+    return activePatternStyle
+  }
+  
 }
