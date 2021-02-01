@@ -10,7 +10,7 @@ window.onload = function() {
   start.getPatterns()
 
   patternsDropdown.addEventListener("mouseup", e => {
-    let selectedPattern = patternsDropdown.value
-    start.renderSelectedPattern(selectedPattern - 1)
+    let selectedPattern = patternsDropdown.value - 1
+    start.renderSelectedPattern(selectedPattern)
   })
 }
