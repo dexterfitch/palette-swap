@@ -8,9 +8,9 @@ const paletteBox = document.getElementById("palette-box")
 window.onload = function() {
   const start = new Patterns()
   start.getPatterns()
-  
+
   patternsDropdown.addEventListener("mouseup", e => {
     let selectedPattern = patternsDropdown.value
-    start.renderSelectedPattern(selectedPattern)
+    start.renderSelectedPattern(selectedPattern - 1)
   })
 }
