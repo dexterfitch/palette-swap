@@ -6,11 +6,13 @@ const patternBox = document.getElementById("pattern-box")
 const paletteBox = document.getElementById("palette-box")
 
 window.onload = function() {
-  const start = new Patterns()
-  start.getPatterns()
+  const patternStart = new Patterns()
+  const paletteStart = new Palette()
+  
+  patternStart.getPatterns()
 
   patternsDropdown.addEventListener("mouseup", e => {
     let selectedPattern = patternsDropdown.value - 1
-    start.renderSelectedPattern(selectedPattern)
+    patternStart.renderSelectedPattern(selectedPattern)
   })
 }
