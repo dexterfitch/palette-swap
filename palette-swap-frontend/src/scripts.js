@@ -7,5 +7,5 @@ function loadScript(url) {
 }
 
 loadScript('./src/index.js');
-loadScript('./src/pattern.js');
+loadScript('./src/patterns.js');
 loadScript('./src/palette.js');
