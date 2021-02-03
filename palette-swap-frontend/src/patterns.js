@@ -38,17 +38,38 @@ class Patterns {
     patternPreview.className = "pattern-preview"
     patternPreview.setAttribute("style", selectedPatternStyle)
 
-    while(patternBox.firstChild) {
-      patternBox.removeChild(patternBox.firstChild)
-    }
-    patternBox.appendChild(patternPreview)
+    clearThenAppend(patternBox, patternPreview)
 
     this.setSelectedPatternDefaultColorPreviews(selectedPattern)
     this.setSelectedPatternDefaultStyleColorValues(selectedPattern)
+    this.setSelectedPatternDefaultStyleColorSliders(selectedPattern)
   }
 
   getSelectedPatternDefaultPalette = (selectedPattern) => {
     return selectedPattern.palettes[0]
+  }
+
+  getSelectedPatternDefaultPaletteRGBValues = (selectedPattern) => {
+    let defaultPalette = this.getSelectedPatternDefaultPalette(selectedPattern)
+
+    let color1ValueString = defaultPalette.color1
+    let color2ValueString = defaultPalette.color2
+    let color3ValueString = defaultPalette.color3
+
+    window.color1RvalueInteger = color1ValueString.split(",")[0]
+    window.color1GvalueInteger = color1ValueString.split(",")[1].replace(" ", "")
+    window.color1BvalueInteger = color1ValueString.split(",")[2].replace(" ", "")
+    window.color2RvalueInteger = color2ValueString.split(",")[0]
+    window.color2GvalueInteger = color2ValueString.split(",")[1].replace(" ", "")
+    window.color2BvalueInteger = color2ValueString.split(",")[2].replace(" ", "")
+    if (color3ValueString === null) {
+      window.color3RvalueInteger = null
+    } else {
+      window.color3RvalueInteger = color3ValueString.split(",")[0]
+      window.color3GvalueInteger = color3ValueString.split(",")[1].replace(" ", "")
+      window.color3BvalueInteger = color3ValueString.split(",")[2].replace(" ", "")
+    }
+
   }
 
   setSelectedPatternDefaultStyle = (selectedPattern) => {
@@ -83,39 +104,12 @@ class Patterns {
   }
 
   setSelectedPatternDefaultStyleColorValues = (selectedPattern) => {
+    this.getSelectedPatternDefaultPaletteRGBValues(selectedPattern)
     let defaultPalette = this.getSelectedPatternDefaultPalette(selectedPattern)
 
     let paletteName = document.getElementById("palette-name")
     let paletteNameH3 = document.createElement("h3")
     let paletteNameText = document.createTextNode(`${defaultPalette.name}`)
-
-    let paletteColor1Preview = document.getElementById("color1-color-preview")
-    let paletteColor1Rslider = document.getElementById("color1-r")
-    let paletteColor1Rvalue = document.getElementById("color1-r-value")
-    let paletteColor1Gslider = document.getElementById("color1-g")
-    let paletteColor1Gvalue = document.getElementById("color1-g-value")
-    let paletteColor1Bslider = document.getElementById("color1-b")
-    let paletteColor1Bvalue = document.getElementById("color1-b-value")
-
-    let paletteColor2Preview = document.getElementById("color2-color-preview")
-    let paletteColor2Rslider = document.getElementById("color2-r")
-    let paletteColor2Rvalue = document.getElementById("color2-r-value")
-    let paletteColor2Gslider = document.getElementById("color2-g")
-    let paletteColor2Gvalue = document.getElementById("color2-g-value")
-    let paletteColor2Bslider = document.getElementById("color2-b")
-    let paletteColor2Bvalue = document.getElementById("color2-b-value")
-
-    let paletteColor3Preview = document.getElementById("color3-color-preview")
-    let paletteColor3Rslider = document.getElementById("color3-r")
-    let paletteColor3Rvalue = document.getElementById("color3-r-value")
-    let paletteColor3Gslider = document.getElementById("color3-g")
-    let paletteColor3Gvalue = document.getElementById("color3-g-value")
-    let paletteColor3Bslider = document.getElementById("color3-b")
-    let paletteColor3Bvalue = document.getElementById("color3-b-value")
-
-    let color1ValueString = defaultPalette.color1
-    let color2ValueString = defaultPalette.color2
-    let color3ValueString = defaultPalette.color3
 
     while(paletteName.firstChild) {
       paletteName.removeChild(paletteName.firstChild)
@@ -123,63 +117,71 @@ class Patterns {
     paletteNameH3.appendChild(paletteNameText)
     paletteName.appendChild(paletteNameH3)
 
-    let color1RvalueText = document.createTextNode(`${color1ValueString.split(",")[0]}`)
-    while(paletteColor1Rvalue.firstChild) {
-      paletteColor1Rvalue.removeChild(paletteColor1Rvalue.firstChild)
-    }
-    paletteColor1Rvalue.appendChild(color1RvalueText)
-    let color1GvalueText = document.createTextNode(`${color1ValueString.split(",")[1].replace(" ", "")}`)
-    while(paletteColor1Gvalue.firstChild) {
-      paletteColor1Gvalue.removeChild(paletteColor1Gvalue.firstChild)
-    }
-    paletteColor1Gvalue.appendChild(color1GvalueText)
-    let color1BvalueText = document.createTextNode(`${color1ValueString[4]}`)
-    while(paletteColor1Bvalue.firstChild) {
-      paletteColor1Bvalue.removeChild(paletteColor1Bvalue.firstChild)
-    }
-    paletteColor1Bvalue.appendChild(color1BvalueText)
+    let paletteColor1Rvalue = document.getElementById("color1-r-value")
+    let paletteColor1Gvalue = document.getElementById("color1-g-value")
+    let paletteColor1Bvalue = document.getElementById("color1-b-value")
+    let paletteColor2Rvalue = document.getElementById("color2-r-value")
+    let paletteColor2Gvalue = document.getElementById("color2-g-value")
+    let paletteColor2Bvalue = document.getElementById("color2-b-value")
+    let paletteColor3Rvalue = document.getElementById("color3-r-value")
+    let paletteColor3Gvalue = document.getElementById("color3-g-value")
+    let paletteColor3Bvalue = document.getElementById("color3-b-value")
 
-    let color2RvalueText = document.createTextNode(`${color2ValueString.split(",")[0]}`)
-    while(paletteColor2Rvalue.firstChild) {
-      paletteColor2Rvalue.removeChild(paletteColor2Rvalue.firstChild)
-    }
-    paletteColor2Rvalue.appendChild(color2RvalueText)
-    let color2GvalueText = document.createTextNode(`${color2ValueString.split(",")[1].replace(" ", "")}`)
-    while(paletteColor2Gvalue.firstChild) {
-      paletteColor2Gvalue.removeChild(paletteColor2Gvalue.firstChild)
-    }
-    paletteColor2Gvalue.appendChild(color2GvalueText)
-    let color2BvalueText = document.createTextNode(`${color2ValueString.split(",")[2].replace(" ", "")}`)
-    while(paletteColor2Bvalue.firstChild) {
-      paletteColor2Bvalue.removeChild(paletteColor2Bvalue.firstChild)
-    }
-    paletteColor2Bvalue.appendChild(color2BvalueText)
-
+    let color1RvalueText = document.createTextNode(`${color1RvalueInteger}`)
+    let color1GvalueText = document.createTextNode(`${color1GvalueInteger}`)
+    let color1BvalueText = document.createTextNode(`${color1BvalueInteger}`)
+    let color2RvalueText = document.createTextNode(`${color2RvalueInteger}`)
+    let color2GvalueText = document.createTextNode(`${color2GvalueInteger}`)
+    let color2BvalueText = document.createTextNode(`${color2BvalueInteger}`)
     let color3RvalueText = ""
     let color3GvalueText = ""
     let color3BvalueText = ""
 
-    if (color3ValueString === null) {
-      color3RvalueText = document.createTextNode("NUL")
-      color3GvalueText = document.createTextNode("NUL")
-      color3BvalueText = document.createTextNode("NUL")
+    if (color3RvalueInteger === null) {
+      color3RvalueText = document.createTextNode("...")
+      color3GvalueText = document.createTextNode("...")
+      color3BvalueText = document.createTextNode("...")
     } else {
-      color3RvalueText = document.createTextNode(`${color3ValueString.split(",")[0]}`)
-      color3GvalueText = document.createTextNode(`${color3ValueString.split(",")[1].replace(" ", "")}`)
-      color3BvalueText = document.createTextNode(`${color3ValueString.split(",")[2].replace(" ", "")}`)
+      color3RvalueText = document.createTextNode(`${color3RvalueInteger}`)
+      color3GvalueText = document.createTextNode(`${color3GvalueInteger}`)
+      color3BvalueText = document.createTextNode(`${color3BvalueInteger}`)
     }
-    
-    while(paletteColor3Rvalue.firstChild) {
-      paletteColor3Rvalue.removeChild(paletteColor3Rvalue.firstChild)
-    }
-    paletteColor3Rvalue.appendChild(color3RvalueText)
-    while(paletteColor3Gvalue.firstChild) {
-      paletteColor3Gvalue.removeChild(paletteColor3Gvalue.firstChild)
-    }
-    paletteColor3Gvalue.appendChild(color3GvalueText)
-    while(paletteColor3Bvalue.firstChild) {
-      paletteColor3Bvalue.removeChild(paletteColor3Bvalue.firstChild)
-    }
-    paletteColor3Bvalue.appendChild(color3BvalueText)
+
+    clearThenAppend(paletteColor1Rvalue, color1RvalueText)
+    clearThenAppend(paletteColor1Gvalue, color1GvalueText)
+    clearThenAppend(paletteColor1Bvalue, color1BvalueText)
+    clearThenAppend(paletteColor2Rvalue, color2RvalueText)
+    clearThenAppend(paletteColor2Gvalue, color2GvalueText)
+    clearThenAppend(paletteColor2Bvalue, color2BvalueText)
+    clearThenAppend(paletteColor3Rvalue, color3RvalueText)
+    clearThenAppend(paletteColor3Gvalue, color3GvalueText)
+    clearThenAppend(paletteColor3Bvalue, color3BvalueText)
   }
+
+  setSelectedPatternDefaultStyleColorSliders = (selectedPattern) => {
+    this.getSelectedPatternDefaultPaletteRGBValues(selectedPattern)
+
+    let color1Rslider = document.getElementById("color1-r")
+    let color1Gslider = document.getElementById("color1-g")
+    let color1Bslider = document.getElementById("color1-b")
+    let color2Rslider = document.getElementById("color2-r")
+    let color2Gslider = document.getElementById("color2-g")
+    let color2Bslider = document.getElementById("color2-b")
+    let color3Rslider = document.getElementById("color3-r")
+    let color3Gslider = document.getElementById("color3-g")
+    let color3Bslider = document.getElementById("color3-b")
+
+    color1Rslider.value = color1RvalueInteger
+    color1Rslider.value = color1RvalueInteger
+    color1Rslider.value = color1RvalueInteger
+    color2Rslider.value = color2RvalueInteger
+    color2Gslider.value = color2GvalueInteger
+    color2Bslider.value = color2BvalueInteger
+    if (!(color3RvalueInteger === null)) {
+      color3Rslider.value = color3RvalueInteger
+      color3Gslider.value = color3GvalueInteger
+      color3Bslider.value = color3BvalueInteger
+    }
+  }
+
 }

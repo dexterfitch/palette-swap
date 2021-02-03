@@ -12,7 +12,16 @@ window.onload = function() {
   patternStart.getPatterns()
 
   patternsDropdown.addEventListener("mouseup", e => {
-    let selectedPattern = patternsDropdown.value - 1
-    patternStart.renderSelectedPattern(selectedPattern)
+    if (!(patternsDropdown.value === "")) {
+      let selectedPattern = patternsDropdown.value - 1
+      patternStart.renderSelectedPattern(selectedPattern)
+    }
   })
+}
+
+clearThenAppend = (sectionBeingCleared, newSectionData) => {
+  while(sectionBeingCleared.firstChild) {
+    sectionBeingCleared.removeChild(sectionBeingCleared.firstChild)
+  }
+  sectionBeingCleared.appendChild(newSectionData)
 }
