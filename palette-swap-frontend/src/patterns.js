@@ -31,6 +31,7 @@ class Patterns {
 
   renderSelectedPattern = (selectedPatternId) => {
     let currentPattern = this.patterns[selectedPatternId]
+    window.currentPalettes = currentPattern.palettes
     let selectedPatternStyle = this.renderStyle(currentPattern)
 
     palette.className = "palette"
@@ -45,12 +46,12 @@ class Patterns {
     this.setColorSliders(currentPattern)
   }
 
-  renderStyle = (selectedPattern, selectedPalette = 0) => {
-    window.currentPalette = selectedPattern.palettes[selectedPalette]
+  renderStyle = (selectedPattern, selectedPalette = 1) => {
+    window.currentPalette = currentPalettes[selectedPalette - 1]
 
     let patternStyleRaw = selectedPattern.style
-    let selectedPatternStyle = patternStyleRaw.replace(/COLOR1/g, currentPalette.color1).replace(/COLOR2/g, currentPalette.color2).replace(/COLOR3/g, currentPalette.color3)
 
+    let selectedPatternStyle = patternStyleRaw.replace(/COLOR1/g, currentPalette.color1).replace(/COLOR2/g, currentPalette.color2).replace(/COLOR3/g, currentPalette.color3)
 
     if(currentPalette.color3 === null) {
       color3Section.setAttribute("style", "opacity: 0.25; pointer-events: none;")
@@ -61,9 +62,7 @@ class Patterns {
     return selectedPatternStyle
   }
 
-  getRGBValues = (selectedPattern, selectedPalette = 0) => {
-    let currentPalette = selectedPattern.palettes[selectedPalette]
-
+  getRGBValues = (selectedPattern, selectedPalette = 1) => {
     let color1valueString = currentPalette.color1
     let color2valueString = currentPalette.color2
     let color3valueString = currentPalette.color3

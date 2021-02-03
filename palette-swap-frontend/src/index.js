@@ -3,8 +3,8 @@ const PATTERNS_URL = `${BASE_URL}/patterns`
 const PALETTES_URL = `${BASE_URL}/palettes`
 
 window.onload = function() {
-  const patternStart = new Patterns()
-  const paletteStart = new Palette()
+  window.patternStart = new Patterns()
+  window.paletteStart = new Palette()
   
   patternStart.getPatterns()
   paletteStart.getPalettes()

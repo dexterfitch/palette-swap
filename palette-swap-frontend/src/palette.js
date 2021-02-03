@@ -21,13 +21,16 @@ class Palette {
     })
   }
 
-  filterPalettes = (selectedPattern) => {
+  filterPalettes = (selectedPatternId) => {
+    window.selectedPatternId = selectedPatternId
+
     let filteredPalettes = []
     this.palettes.forEach(palette => {
-      if(palette.relationships.pattern.data.id === selectedPattern) {
+      if(palette.relationships.pattern.data.id === selectedPatternId) {
         filteredPalettes.push(palette)
       }
     })
+
     this.displayFilteredPalettes(filteredPalettes)
   }
 
@@ -42,6 +45,7 @@ class Palette {
       let paletteColor1 = palette.attributes.color1
       let paletteColor2 = palette.attributes.color2
       let paletteColor3 = palette.attributes.color3
+      let palettePatternId = palette.relationships.pattern.data.id
 
       let palettePreviewNameOverlay = document.createElement("div")
       palettePreviewNameOverlay.className = "palette-name"
@@ -50,6 +54,7 @@ class Palette {
 
       let palettePreview = document.createElement("div")
       palettePreview.className = "col-6 palette-preview"
+      palettePreview.setAttribute("id", `${palettePatternId} - ${paletteId}`)
 
       let palettePreviewBox = document.createElement("div")
       palettePreviewBox.className = "row"
@@ -93,7 +98,47 @@ class Palette {
       palettePreview.appendChild(palettePreviewBox)
 
       selectPaletteBox.appendChild(palettePreview)
-
     })
+
+    this.addListenersToPalettesInGallery()
+  }
+
+  addListenersToPalettesInGallery = () => {
+    let selectablePalettes = document.getElementsByClassName("palette-preview")
+
+    for(var i = 0; i < selectablePalettes.length; i++){
+        selectablePalettes[i].addEventListener('click', this.getUpdatedStyle, true);
+    }
+  }
+
+  getUpdatedStyle = () => {
+    let clickedPaletteIDs
+    let splitPaletteIDs
+
+    if(event.target.parentElement.className === "col-4" || event.target.parentElement.className === "palette-name") {
+      clickedPaletteIDs = event.target.parentElement.parentElement.parentElement.id
+      splitPaletteIDs= clickedPaletteIDs.split(" - ")
+    } else if (event.target.parentElement.className === "row") {
+      clickedPaletteIDs = event.target.parentElement.parentElement.id
+      splitPaletteIDs = clickedPaletteIDs.split(" - ")
+    }
+
+    let currentPatternID = parseInt(splitPaletteIDs[0]) - 1
+    let currentPaletteID = parseInt(splitPaletteIDs[1])
+
+    let currentPattern = patternStart.patterns[currentPatternID]
+    let updatedStyle = patternStart.renderStyle(currentPattern, currentPaletteID)
+
+    this.updateCurrentPatternStyle(updatedStyle, currentPattern)
+  }
+
+  updateCurrentPatternStyle = (updatedStyle, currentPattern) => {
+    let patternPreview = document.getElementsByClassName("pattern-preview")
+
+    patternPreview[0].setAttribute("style", updatedStyle)
+
+    patternStart.setColorPreviews(currentPattern)
+    patternStart.setColorValues(currentPattern)
+    patternStart.setColorSliders(currentPattern)
   }
 }
