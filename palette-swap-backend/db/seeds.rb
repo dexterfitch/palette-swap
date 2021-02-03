@@ -24,19 +24,19 @@ patterns = Pattern.create([
 palettes = Palette.create([
   { name: "b&w",
     color1: "0,0,0",
-    color2: "255,255,255"
+    color2: "255,255,255",
     pattern: Pattern.find(1) },
   { name: "b&w",
     color1: "0,0,0",
-    color2: "255,255,255"
+    color2: "255,255,255",
     pattern: Pattern.find(2) },
   { name: "b&w",
     color1: "0,0,0",
-    color2: "255,255,255"
+    color2: "255,255,255",
     pattern: Pattern.find(3) },
   { name: "b&w",
     color1: "0,0,0",
-    color2: "255,255,255"
+    color2: "255,255,255",
     pattern: Pattern.find(4) },
   { name: "b&w",
     color1: "0,0,0",
@@ -45,11 +45,11 @@ palettes = Palette.create([
     pattern: Pattern.find(5) },
   { name: "b&w",
     color1: "0,0,0",
-    color2: "255,255,255"
+    color2: "255,255,255",
     pattern: Pattern.find(6) },
   { name: "b&w",
     color1: "0,0,0",
-    color2: "255,255,255"
+    color2: "255,255,255",
     pattern: Pattern.find(7) },
   { name: "b&w",
     color1: "0,0,0",
@@ -63,6 +63,7 @@ palettes = Palette.create([
     pattern: Pattern.find(9) },
   { name: "b&w",
     color1: "0,0,0",
-    color2: "255,255,255"
+    color2: "255,255,255",
+    color3: "130,130,130",
     pattern: Pattern.find(10) }
 ])
