@@ -31,7 +31,7 @@ class Patterns {
 
   renderSelectedPattern = (selectedPatternId) => {
     let selectedPattern = this.patterns[selectedPatternId]
-    let selectedPatternStyle = this.setStyle(selectedPattern)
+    let selectedPatternStyle = this.renderStyle(selectedPattern)
 
     let patternPreview = document.createElement("div")
     patternPreview.className = "pattern-preview"
@@ -42,6 +42,22 @@ class Patterns {
     this.setColorPreviews(selectedPattern)
     this.setColorValues(selectedPattern)
     this.setColorSliders(selectedPattern)
+  }
+
+  renderStyle = (selectedPattern, selectedPalette = 0) => {
+    window.currentPalette = selectedPattern.palettes[selectedPalette]
+
+    let patternStyleRaw = selectedPattern.style
+    let selectedPatternStyle = patternStyleRaw.replace(/COLOR1/g, currentPalette.color1).replace(/COLOR2/g, currentPalette.color2).replace(/COLOR3/g, currentPalette.color3)
+
+
+    if(currentPalette.color3 === null) {
+      color3Section.setAttribute("style", "opacity: 0.25; pointer-events: none;")
+    } else {
+      color3Section.setAttribute("style", "opacity: 1; pointer-events: auto;")
+    }
+
+    return selectedPatternStyle
   }
 
   getRGBValues = (selectedPattern, selectedPalette = 0) => {
@@ -63,22 +79,6 @@ class Patterns {
       window.color3BvalueInteger = color3valueString.split(",")[2].replace(" ", "")
     }
 
-  }
-
-  setStyle = (selectedPattern, selectedPalette = 0) => {
-    window.currentPalette = selectedPattern.palettes[selectedPalette]
-
-    let patternStyleRaw = selectedPattern.style
-    let selectedPatternStyle = patternStyleRaw.replace(/COLOR1/g, currentPalette.color1).replace(/COLOR2/g, currentPalette.color2).replace(/COLOR3/g, currentPalette.color3)
-
-
-    if(currentPalette.color3 === null) {
-      color3Section.setAttribute("style", "opacity: 0.25; pointer-events: none;")
-    } else {
-      color3Section.setAttribute("style", "opacity: 1; pointer-events: auto;")
-    }
-
-    return selectedPatternStyle
   }
 
   setColorPreviews = (selectedPattern) => {
