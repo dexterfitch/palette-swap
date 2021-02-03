@@ -43,14 +43,31 @@ class Patterns {
     }
     patternBox.appendChild(patternPreview)
 
+    this.setSelectedPatternDefaultColorPreviews(selectedPattern)
     this.setSelectedPatternDefaultStyleColorValues(selectedPattern)
   }
 
+  getSelectedPatternDefaultPalette = (selectedPattern) => {
+    return selectedPattern.palettes[0]
+  }
+
   setSelectedPatternDefaultStyle = (selectedPattern) => {
-    let defaultPalette = selectedPattern.palettes[0]
+    let defaultPalette = this.getSelectedPatternDefaultPalette(selectedPattern)
     let patternStyleRaw = selectedPattern.style
     let selectedPatternStyle = patternStyleRaw.replace(/COLOR1/g, defaultPalette.color1).replace(/COLOR2/g, defaultPalette.color2).replace(/COLOR3/g, defaultPalette.color3)
     return selectedPatternStyle
+  }
+
+  setSelectedPatternDefaultColorPreviews = (selectedPattern) => {
+    let defaultPalette = this.getSelectedPatternDefaultPalette(selectedPattern)
+
+    let color1ColorPreview = document.getElementById("color1-color-preview")
+    let color2ColorPreview = document.getElementById("color2-color-preview")
+    let color3ColorPreview = document.getElementById("color3-color-preview")
+
+    color1ColorPreview.setAttribute("style", `background-color: rgb(${defaultPalette.color1});`)
+    color2ColorPreview.setAttribute("style", `background-color: rgb(${defaultPalette.color2});`)
+    color3ColorPreview.setAttribute("style", `background-color: rgb(${defaultPalette.color3});`)
   }
 
   setSelectedPatternDefaultStyleColorValues = (selectedPattern) => {
