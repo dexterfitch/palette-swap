@@ -6,6 +6,7 @@ function loadScript(url) {
   body.appendChild(script);
 }
 
+loadScript('./src/nodes.js');
 loadScript('./src/index.js');
 loadScript('./src/patterns.js');
 loadScript('./src/palette.js');

@@ -22,12 +22,11 @@ class Patterns {
   }
 
   renderPatternDropdown = (pattern) => {
-    let select = document.getElementById("patterns-dropdown")
     let option = document.createElement("option")
 
     option.value = pattern.id
     option.text = pattern.name
-    select.appendChild(option)
+    selectPatternDropdown.appendChild(option)
   }
 
   renderSelectedPattern = (selectedPatternId) => {
@@ -45,39 +44,31 @@ class Patterns {
     this.setSelectedPatternDefaultStyleColorSliders(selectedPattern)
   }
 
-  getSelectedPatternDefaultPalette = (selectedPattern) => {
-    return selectedPattern.palettes[0]
-  }
+  setSelectedPatternDefaultPaletteRGBValues = (selectedPattern) => {
+    let color1defaultValueString = defaultPalette.color1
+    let color2defaultValueString = defaultPalette.color2
+    let color3defaultValueString = defaultPalette.color3
 
-  getSelectedPatternDefaultPaletteRGBValues = (selectedPattern) => {
-    let defaultPalette = this.getSelectedPatternDefaultPalette(selectedPattern)
-
-    let color1ValueString = defaultPalette.color1
-    let color2ValueString = defaultPalette.color2
-    let color3ValueString = defaultPalette.color3
-
-    window.color1RvalueInteger = color1ValueString.split(",")[0]
-    window.color1GvalueInteger = color1ValueString.split(",")[1].replace(" ", "")
-    window.color1BvalueInteger = color1ValueString.split(",")[2].replace(" ", "")
-    window.color2RvalueInteger = color2ValueString.split(",")[0]
-    window.color2GvalueInteger = color2ValueString.split(",")[1].replace(" ", "")
-    window.color2BvalueInteger = color2ValueString.split(",")[2].replace(" ", "")
-    if (color3ValueString === null) {
-      window.color3RvalueInteger = null
-    } else {
-      window.color3RvalueInteger = color3ValueString.split(",")[0]
-      window.color3GvalueInteger = color3ValueString.split(",")[1].replace(" ", "")
-      window.color3BvalueInteger = color3ValueString.split(",")[2].replace(" ", "")
+    window.color1RdefaultValueInteger = color1defaultValueString.split(",")[0]
+    window.color1GdefaultValueInteger = color1defaultValueString.split(",")[1].replace(" ", "")
+    window.color1BdefaultValueInteger = color1defaultValueString.split(",")[2].replace(" ", "")
+    window.color2RdefaultValueInteger = color2defaultValueString.split(",")[0]
+    window.color2GdefaultValueInteger = color2defaultValueString.split(",")[1].replace(" ", "")
+    window.color2BdefaultValueInteger = color2defaultValueString.split(",")[2].replace(" ", "")
+    if (!(color3defaultValueString === null)) {
+      window.color3RdefaultValueInteger = color3defaultValueString.split(",")[0]
+      window.color3GdefaultValueInteger = color3defaultValueString.split(",")[1].replace(" ", "")
+      window.color3BdefaultValueInteger = color3defaultValueString.split(",")[2].replace(" ", "")
     }
 
   }
 
   setSelectedPatternDefaultStyle = (selectedPattern) => {
-    let defaultPalette = this.getSelectedPatternDefaultPalette(selectedPattern)
+    window.defaultPalette = selectedPattern.palettes[0]
+
     let patternStyleRaw = selectedPattern.style
     let selectedPatternStyle = patternStyleRaw.replace(/COLOR1/g, defaultPalette.color1).replace(/COLOR2/g, defaultPalette.color2).replace(/COLOR3/g, defaultPalette.color3)
 
-    let color3Section = document.getElementById("palette-color3")
 
     if(defaultPalette.color3 === null) {
       color3Section.setAttribute("style", "opacity: 0.25; pointer-events: none;")
@@ -89,11 +80,6 @@ class Patterns {
   }
 
   setSelectedPatternDefaultColorPreviews = (selectedPattern) => {
-    let defaultPalette = this.getSelectedPatternDefaultPalette(selectedPattern)
-
-    let color1ColorPreview = document.getElementById("color1-color-preview")
-    let color2ColorPreview = document.getElementById("color2-color-preview")
-    let color3ColorPreview = document.getElementById("color3-color-preview")
 
     color1ColorPreview.setAttribute("style", `background-color: rgb(${defaultPalette.color1});`)
     color2ColorPreview.setAttribute("style", `background-color: rgb(${defaultPalette.color2});`)
@@ -104,10 +90,8 @@ class Patterns {
   }
 
   setSelectedPatternDefaultStyleColorValues = (selectedPattern) => {
-    this.getSelectedPatternDefaultPaletteRGBValues(selectedPattern)
-    let defaultPalette = this.getSelectedPatternDefaultPalette(selectedPattern)
+    this.setSelectedPatternDefaultPaletteRGBValues(selectedPattern)
 
-    let paletteName = document.getElementById("palette-name")
     let paletteNameH3 = document.createElement("h3")
     let paletteNameText = document.createTextNode(`${defaultPalette.name}`)
 
@@ -117,34 +101,25 @@ class Patterns {
     paletteNameH3.appendChild(paletteNameText)
     paletteName.appendChild(paletteNameH3)
 
-    let paletteColor1Rvalue = document.getElementById("color1-r-value")
-    let paletteColor1Gvalue = document.getElementById("color1-g-value")
-    let paletteColor1Bvalue = document.getElementById("color1-b-value")
-    let paletteColor2Rvalue = document.getElementById("color2-r-value")
-    let paletteColor2Gvalue = document.getElementById("color2-g-value")
-    let paletteColor2Bvalue = document.getElementById("color2-b-value")
-    let paletteColor3Rvalue = document.getElementById("color3-r-value")
-    let paletteColor3Gvalue = document.getElementById("color3-g-value")
-    let paletteColor3Bvalue = document.getElementById("color3-b-value")
 
-    let color1RvalueText = document.createTextNode(`${color1RvalueInteger}`)
-    let color1GvalueText = document.createTextNode(`${color1GvalueInteger}`)
-    let color1BvalueText = document.createTextNode(`${color1BvalueInteger}`)
-    let color2RvalueText = document.createTextNode(`${color2RvalueInteger}`)
-    let color2GvalueText = document.createTextNode(`${color2GvalueInteger}`)
-    let color2BvalueText = document.createTextNode(`${color2BvalueInteger}`)
+    let color1RvalueText = document.createTextNode(`${color1RdefaultValueInteger}`)
+    let color1GvalueText = document.createTextNode(`${color1GdefaultValueInteger}`)
+    let color1BvalueText = document.createTextNode(`${color1BdefaultValueInteger}`)
+    let color2RvalueText = document.createTextNode(`${color2RdefaultValueInteger}`)
+    let color2GvalueText = document.createTextNode(`${color2GdefaultValueInteger}`)
+    let color2BvalueText = document.createTextNode(`${color2BdefaultValueInteger}`)
     let color3RvalueText = ""
     let color3GvalueText = ""
     let color3BvalueText = ""
 
-    if (color3RvalueInteger === null) {
+    if (defaultPalette.color3 === null) {
       color3RvalueText = document.createTextNode("...")
       color3GvalueText = document.createTextNode("...")
       color3BvalueText = document.createTextNode("...")
     } else {
-      color3RvalueText = document.createTextNode(`${color3RvalueInteger}`)
-      color3GvalueText = document.createTextNode(`${color3GvalueInteger}`)
-      color3BvalueText = document.createTextNode(`${color3BvalueInteger}`)
+      color3RvalueText = document.createTextNode(`${color3RdefaultValueInteger}`)
+      color3GvalueText = document.createTextNode(`${color3GdefaultValueInteger}`)
+      color3BvalueText = document.createTextNode(`${color3BdefaultValueInteger}`)
     }
 
     clearThenAppend(paletteColor1Rvalue, color1RvalueText)
@@ -159,29 +134,23 @@ class Patterns {
   }
 
   setSelectedPatternDefaultStyleColorSliders = (selectedPattern) => {
-    this.getSelectedPatternDefaultPaletteRGBValues(selectedPattern)
+    this.setSelectedPatternDefaultPaletteRGBValues(selectedPattern)
 
-    let color1Rslider = document.getElementById("color1-r")
-    let color1Gslider = document.getElementById("color1-g")
-    let color1Bslider = document.getElementById("color1-b")
-    let color2Rslider = document.getElementById("color2-r")
-    let color2Gslider = document.getElementById("color2-g")
-    let color2Bslider = document.getElementById("color2-b")
-    let color3Rslider = document.getElementById("color3-r")
-    let color3Gslider = document.getElementById("color3-g")
-    let color3Bslider = document.getElementById("color3-b")
-
-    color1Rslider.value = color1RvalueInteger
-    color1Rslider.value = color1RvalueInteger
-    color1Rslider.value = color1RvalueInteger
-    color2Rslider.value = color2RvalueInteger
-    color2Gslider.value = color2GvalueInteger
-    color2Bslider.value = color2BvalueInteger
-    if (!(color3RvalueInteger === null)) {
-      color3Rslider.value = color3RvalueInteger
-      color3Gslider.value = color3GvalueInteger
-      color3Bslider.value = color3BvalueInteger
+    color1Rslider.value = color1RdefaultValueInteger
+    color1Rslider.value = color1RdefaultValueInteger
+    color1Rslider.value = color1RdefaultValueInteger
+    color2Rslider.value = color2RdefaultValueInteger
+    color2Gslider.value = color2GdefaultValueInteger
+    color2Bslider.value = color2BdefaultValueInteger
+    if (!(defaultPalette.color3 === null)) {
+      color3Rslider.value = color3RdefaultValueInteger
+      color3Gslider.value = color3GdefaultValueInteger
+      color3Bslider.value = color3BdefaultValueInteger
     }
+  }
+
+  updatePatternStyleColorValues = () => {
+
   }
 
 }
