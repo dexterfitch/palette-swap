@@ -64,6 +64,5 @@ palettes = Palette.create([
   { name: "b&w",
     color1: "0,0,0",
     color2: "255,255,255",
-    color3: "130,130,130",
     pattern: Pattern.find(10) }
 ])
