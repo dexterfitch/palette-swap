@@ -94,12 +94,8 @@ class Patterns {
 
     let paletteNameH3 = document.createElement("h3")
     let paletteNameText = document.createTextNode(`${defaultPalette.name}`)
-
-    while(paletteName.firstChild) {
-      paletteName.removeChild(paletteName.firstChild)
-    }
     paletteNameH3.appendChild(paletteNameText)
-    paletteName.appendChild(paletteNameH3)
+    clearThenAppend(paletteName, paletteNameH3)
 
 
     let color1RvalueText = document.createTextNode(`${color1RdefaultValueInteger}`)
