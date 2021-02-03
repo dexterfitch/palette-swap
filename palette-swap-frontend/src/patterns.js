@@ -31,7 +31,7 @@ class Patterns {
 
   renderSelectedPattern = (selectedPatternId) => {
     let selectedPattern = this.patterns[selectedPatternId]
-    let selectedPatternStyle = this.setSelectedPatternDefaultStyle(selectedPattern)
+    let selectedPatternStyle = this.setStyle(selectedPattern)
 
     let patternPreview = document.createElement("div")
     patternPreview.className = "pattern-preview"
@@ -39,12 +39,12 @@ class Patterns {
 
     clearThenAppend(patternBox, patternPreview)
 
-    this.setSelectedPatternDefaultColorPreviews(selectedPattern)
-    this.setSelectedPatternDefaultStyleColorValues(selectedPattern)
-    this.setSelectedPatternDefaultStyleColorSliders(selectedPattern)
+    this.setColorPreviews(selectedPattern)
+    this.setColorValues(selectedPattern)
+    this.setColorSliders(selectedPattern)
   }
 
-  getSelectedPatternRGBValues = (selectedPattern, selectedPalette = 0) => {
+  getRGBValues = (selectedPattern, selectedPalette = 0) => {
     let currentPalette = selectedPattern.palettes[selectedPalette]
 
     let color1valueString = currentPalette.color1
@@ -65,14 +65,14 @@ class Patterns {
 
   }
 
-  setSelectedPatternDefaultStyle = (selectedPattern) => {
-    window.defaultPalette = selectedPattern.palettes[0]
+  setStyle = (selectedPattern, selectedPalette = 0) => {
+    window.currentPalette = selectedPattern.palettes[selectedPalette]
 
     let patternStyleRaw = selectedPattern.style
-    let selectedPatternStyle = patternStyleRaw.replace(/COLOR1/g, defaultPalette.color1).replace(/COLOR2/g, defaultPalette.color2).replace(/COLOR3/g, defaultPalette.color3)
+    let selectedPatternStyle = patternStyleRaw.replace(/COLOR1/g, currentPalette.color1).replace(/COLOR2/g, currentPalette.color2).replace(/COLOR3/g, currentPalette.color3)
 
 
-    if(defaultPalette.color3 === null) {
+    if(currentPalette.color3 === null) {
       color3Section.setAttribute("style", "opacity: 0.25; pointer-events: none;")
     } else {
       color3Section.setAttribute("style", "opacity: 1; pointer-events: auto;")
@@ -81,20 +81,20 @@ class Patterns {
     return selectedPatternStyle
   }
 
-  setSelectedPatternDefaultColorPreviews = (selectedPattern) => {
-    color1ColorPreview.setAttribute("style", `background-color: rgb(${defaultPalette.color1});`)
-    color2ColorPreview.setAttribute("style", `background-color: rgb(${defaultPalette.color2});`)
+  setColorPreviews = (selectedPattern) => {
+    color1ColorPreview.setAttribute("style", `background-color: rgb(${currentPalette.color1});`)
+    color2ColorPreview.setAttribute("style", `background-color: rgb(${currentPalette.color2});`)
 
-    if (!(defaultPalette.color3 === null)) {
-      color3ColorPreview.setAttribute("style", `background-color: rgb(${defaultPalette.color3});`)
+    if (!(currentPalette.color3 === null)) {
+      color3ColorPreview.setAttribute("style", `background-color: rgb(${currentPalette.color3});`)
     }
   }
 
-  setSelectedPatternDefaultStyleColorValues = (selectedPattern) => {
-    this.getSelectedPatternRGBValues(selectedPattern)
+  setColorValues = (selectedPattern) => {
+    this.getRGBValues(selectedPattern)
 
     let paletteNameH3 = document.createElement("h3")
-    let paletteNameText = document.createTextNode(`${defaultPalette.name}`)
+    let paletteNameText = document.createTextNode(`${currentPalette.name}`)
     paletteNameH3.appendChild(paletteNameText)
     clearThenAppend(paletteName, paletteNameH3)
 
@@ -109,7 +109,7 @@ class Patterns {
     let color3GvalueText = ""
     let color3BvalueText = ""
 
-    if (defaultPalette.color3 === null) {
+    if (currentPalette.color3 === null) {
       color3RvalueText = document.createTextNode("...")
       color3GvalueText = document.createTextNode("...")
       color3BvalueText = document.createTextNode("...")
@@ -130,8 +130,8 @@ class Patterns {
     clearThenAppend(paletteColor3Bvalue, color3BvalueText)
   }
 
-  setSelectedPatternDefaultStyleColorSliders = (selectedPattern) => {
-    this.getSelectedPatternRGBValues(selectedPattern)
+  setColorSliders = (selectedPattern) => {
+    this.getRGBValues(selectedPattern)
 
     color1Rslider.value = color1RvalueInteger
     color1Gslider.value = color1GvalueInteger
@@ -139,14 +139,14 @@ class Patterns {
     color2Rslider.value = color2RvalueInteger
     color2Gslider.value = color2GvalueInteger
     color2Bslider.value = color2BvalueInteger
-    if (!(defaultPalette.color3 === null)) {
+    if (!(currentPalette.color3 === null)) {
       color3Rslider.value = color3RvalueInteger
       color3Gslider.value = color3GvalueInteger
       color3Bslider.value = color3BvalueInteger
     }
   }
 
-  updatePatternStyleColorValues = () => {
+  updateColorValues = () => {
 
   }
 
