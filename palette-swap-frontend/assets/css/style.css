@@ -78,6 +78,10 @@
   color: white;
 }
 
+.hidden {
+  display: none;
+}
+
 .no-color {
     width: 100%;
     height: 80px;

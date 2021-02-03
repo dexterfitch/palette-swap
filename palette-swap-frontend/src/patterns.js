@@ -33,6 +33,7 @@ class Patterns {
     let currentPattern = this.patterns[selectedPatternId]
     let selectedPatternStyle = this.renderStyle(currentPattern)
 
+    palette.className = "palette"
     let patternPreview = document.createElement("div")
     patternPreview.className = "pattern-preview"
     patternPreview.setAttribute("style", selectedPatternStyle)
