@@ -47,7 +47,7 @@
 
 .palette-preview-inner {
   width: 100%;
-  height: 60px;
+  height: 80px;
 }
 
 .palette-preview-inner.inner-1 {
@@ -67,9 +67,20 @@
   border-bottom: 1px solid #000;
 }
 
+.palette-name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
+  -webkit-text-stroke: 1px #000;
+  font-size: 30px;
+  color: white;
+}
+
 .no-color {
     width: 100%;
-    height: 60px;
+    height: 80px;
     background-color: #DADADA;
     position: relative;
 }
@@ -81,7 +92,7 @@
     height: 4px;
     background-color: white;
     border-radius: 2px;
-    top: 28px;
+    top: 36px;
 }
 
 .no-color:before {

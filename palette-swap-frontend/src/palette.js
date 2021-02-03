@@ -35,7 +35,7 @@ class Palette {
     while (selectPaletteBox.firstChild) {
       selectPaletteBox.removeChild(selectPaletteBox.lastChild)
     }
-    
+
     filteredPalettes.forEach(palette => {
       let paletteId = palette.attributes.id
       let paletteName = palette.attributes.name
@@ -43,11 +43,17 @@ class Palette {
       let paletteColor2 = palette.attributes.color2
       let paletteColor3 = palette.attributes.color3
 
+      let palettePreviewNameOverlay = document.createElement("div")
+      palettePreviewNameOverlay.className = "palette-name"
+      let palettePreviewNameText = document.createTextNode(`${paletteName}`)
+      palettePreviewNameOverlay.appendChild(palettePreviewNameText)
+
       let palettePreview = document.createElement("div")
-      palettePreview.className = "col-4 palette-preview"
+      palettePreview.className = "col-6 palette-preview"
 
       let palettePreviewBox = document.createElement("div")
       palettePreviewBox.className = "row"
+      palettePreviewBox.setAttribute("style", "position: relative")
 
       let palettePreviewColor1 = document.createElement("div")
       palettePreviewColor1.className = "col-4"
@@ -82,6 +88,7 @@ class Palette {
       palettePreviewBox.appendChild(palettePreviewColor1)
       palettePreviewBox.appendChild(palettePreviewColor2)
       palettePreviewBox.appendChild(palettePreviewColor3)
+      palettePreviewBox.appendChild(palettePreviewNameOverlay)
 
       palettePreview.appendChild(palettePreviewBox)
 
