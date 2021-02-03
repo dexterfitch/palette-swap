@@ -29,8 +29,20 @@
   padding: 0 10px 10px;
 }
 
-.palette-preview .col-4 {
-    padding: 0 !important;
+.col-4.palette-preview {
+    margin-bottom: 24px;
+}
+
+.palette-preview .col-4:nth-child(1) {
+    padding-right: 0;
+}
+
+.palette-preview .col-4:nth-child(3) {
+    padding-left: 0;
+}
+
+.palette-preview .col-4:nth-child(even) {
+    padding: 0;
 }
 
 .palette-preview-inner {
