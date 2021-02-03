@@ -44,21 +44,23 @@ class Patterns {
     this.setSelectedPatternDefaultStyleColorSliders(selectedPattern)
   }
 
-  setSelectedPatternDefaultPaletteRGBValues = (selectedPattern) => {
-    let color1defaultValueString = defaultPalette.color1
-    let color2defaultValueString = defaultPalette.color2
-    let color3defaultValueString = defaultPalette.color3
+  getSelectedPatternRGBValues = (selectedPattern, selectedPalette = 0) => {
+    let currentPalette = selectedPattern.palettes[selectedPalette]
 
-    window.color1RdefaultValueInteger = color1defaultValueString.split(",")[0]
-    window.color1GdefaultValueInteger = color1defaultValueString.split(",")[1].replace(" ", "")
-    window.color1BdefaultValueInteger = color1defaultValueString.split(",")[2].replace(" ", "")
-    window.color2RdefaultValueInteger = color2defaultValueString.split(",")[0]
-    window.color2GdefaultValueInteger = color2defaultValueString.split(",")[1].replace(" ", "")
-    window.color2BdefaultValueInteger = color2defaultValueString.split(",")[2].replace(" ", "")
-    if (!(color3defaultValueString === null)) {
-      window.color3RdefaultValueInteger = color3defaultValueString.split(",")[0]
-      window.color3GdefaultValueInteger = color3defaultValueString.split(",")[1].replace(" ", "")
-      window.color3BdefaultValueInteger = color3defaultValueString.split(",")[2].replace(" ", "")
+    let color1valueString = currentPalette.color1
+    let color2valueString = currentPalette.color2
+    let color3valueString = currentPalette.color3
+
+    window.color1RvalueInteger = color1valueString.split(",")[0]
+    window.color1GvalueInteger = color1valueString.split(",")[1].replace(" ", "")
+    window.color1BvalueInteger = color1valueString.split(",")[2].replace(" ", "")
+    window.color2RvalueInteger = color2valueString.split(",")[0]
+    window.color2GvalueInteger = color2valueString.split(",")[1].replace(" ", "")
+    window.color2BvalueInteger = color2valueString.split(",")[2].replace(" ", "")
+    if (!(color3valueString === null)) {
+      window.color3RvalueInteger = color3valueString.split(",")[0]
+      window.color3GvalueInteger = color3valueString.split(",")[1].replace(" ", "")
+      window.color3BvalueInteger = color3valueString.split(",")[2].replace(" ", "")
     }
 
   }
@@ -80,7 +82,6 @@ class Patterns {
   }
 
   setSelectedPatternDefaultColorPreviews = (selectedPattern) => {
-
     color1ColorPreview.setAttribute("style", `background-color: rgb(${defaultPalette.color1});`)
     color2ColorPreview.setAttribute("style", `background-color: rgb(${defaultPalette.color2});`)
 
@@ -90,7 +91,7 @@ class Patterns {
   }
 
   setSelectedPatternDefaultStyleColorValues = (selectedPattern) => {
-    this.setSelectedPatternDefaultPaletteRGBValues(selectedPattern)
+    this.getSelectedPatternRGBValues(selectedPattern)
 
     let paletteNameH3 = document.createElement("h3")
     let paletteNameText = document.createTextNode(`${defaultPalette.name}`)
@@ -98,12 +99,12 @@ class Patterns {
     clearThenAppend(paletteName, paletteNameH3)
 
 
-    let color1RvalueText = document.createTextNode(`${color1RdefaultValueInteger}`)
-    let color1GvalueText = document.createTextNode(`${color1GdefaultValueInteger}`)
-    let color1BvalueText = document.createTextNode(`${color1BdefaultValueInteger}`)
-    let color2RvalueText = document.createTextNode(`${color2RdefaultValueInteger}`)
-    let color2GvalueText = document.createTextNode(`${color2GdefaultValueInteger}`)
-    let color2BvalueText = document.createTextNode(`${color2BdefaultValueInteger}`)
+    let color1RvalueText = document.createTextNode(`${color1RvalueInteger}`)
+    let color1GvalueText = document.createTextNode(`${color1GvalueInteger}`)
+    let color1BvalueText = document.createTextNode(`${color1BvalueInteger}`)
+    let color2RvalueText = document.createTextNode(`${color2RvalueInteger}`)
+    let color2GvalueText = document.createTextNode(`${color2GvalueInteger}`)
+    let color2BvalueText = document.createTextNode(`${color2BvalueInteger}`)
     let color3RvalueText = ""
     let color3GvalueText = ""
     let color3BvalueText = ""
@@ -113,9 +114,9 @@ class Patterns {
       color3GvalueText = document.createTextNode("...")
       color3BvalueText = document.createTextNode("...")
     } else {
-      color3RvalueText = document.createTextNode(`${color3RdefaultValueInteger}`)
-      color3GvalueText = document.createTextNode(`${color3GdefaultValueInteger}`)
-      color3BvalueText = document.createTextNode(`${color3BdefaultValueInteger}`)
+      color3RvalueText = document.createTextNode(`${color3RvalueInteger}`)
+      color3GvalueText = document.createTextNode(`${color3GvalueInteger}`)
+      color3BvalueText = document.createTextNode(`${color3BvalueInteger}`)
     }
 
     clearThenAppend(paletteColor1Rvalue, color1RvalueText)
@@ -130,18 +131,18 @@ class Patterns {
   }
 
   setSelectedPatternDefaultStyleColorSliders = (selectedPattern) => {
-    this.setSelectedPatternDefaultPaletteRGBValues(selectedPattern)
+    this.getSelectedPatternRGBValues(selectedPattern)
 
-    color1Rslider.value = color1RdefaultValueInteger
-    color1Rslider.value = color1RdefaultValueInteger
-    color1Rslider.value = color1RdefaultValueInteger
-    color2Rslider.value = color2RdefaultValueInteger
-    color2Gslider.value = color2GdefaultValueInteger
-    color2Bslider.value = color2BdefaultValueInteger
+    color1Rslider.value = color1RvalueInteger
+    color1Gslider.value = color1GvalueInteger
+    color1Bslider.value = color1BvalueInteger
+    color2Rslider.value = color2RvalueInteger
+    color2Gslider.value = color2GvalueInteger
+    color2Bslider.value = color2BvalueInteger
     if (!(defaultPalette.color3 === null)) {
-      color3Rslider.value = color3RdefaultValueInteger
-      color3Gslider.value = color3GdefaultValueInteger
-      color3Bslider.value = color3BdefaultValueInteger
+      color3Rslider.value = color3RvalueInteger
+      color3Gslider.value = color3GvalueInteger
+      color3Bslider.value = color3BvalueInteger
     }
   }
 
