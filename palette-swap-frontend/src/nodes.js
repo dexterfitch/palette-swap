@@ -1,4 +1,7 @@
 window.selectPatternDropdown = document.getElementById("patterns-dropdown")
+window.patternBox = document.getElementById("pattern-box")
+window.paletteBox = document.getElementById("palette-box")
+window.selectPaletteBox = document.getElementById("palette-selection-box")
 
 // Palette Color Sections
 window.color1Section = document.getElementById("palette-color1")

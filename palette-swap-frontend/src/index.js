@@ -1,20 +1,19 @@
 const BASE_URL = "http://localhost:3000"
 const PATTERNS_URL = `${BASE_URL}/patterns`
-
-const patternsDropdown = document.getElementById("patterns-dropdown")
-const patternBox = document.getElementById("pattern-box")
-const paletteBox = document.getElementById("palette-box")
+const PALETTES_URL = `${BASE_URL}/palettes`
 
 window.onload = function() {
   const patternStart = new Patterns()
   const paletteStart = new Palette()
   
   patternStart.getPatterns()
+  paletteStart.getPalettes()
 
-  patternsDropdown.addEventListener("mouseup", e => {
-    if (!(patternsDropdown.value === "")) {
-      let selectedPattern = patternsDropdown.value - 1
-      patternStart.renderSelectedPattern(selectedPattern)
+  selectPatternDropdown.addEventListener("mouseup", e => {
+    if (!(selectPatternDropdown.value === "")) {
+      let selectedPattern = selectPatternDropdown.value
+      patternStart.renderSelectedPattern(selectedPattern - 1)
+      paletteStart.filterPalettes(selectedPattern)
     }
   })
 }

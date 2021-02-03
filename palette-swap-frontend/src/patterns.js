@@ -30,8 +30,8 @@ class Patterns {
   }
 
   renderSelectedPattern = (selectedPatternId) => {
-    let selectedPattern = this.patterns[selectedPatternId]
-    let selectedPatternStyle = this.renderStyle(selectedPattern)
+    let currentPattern = this.patterns[selectedPatternId]
+    let selectedPatternStyle = this.renderStyle(currentPattern)
 
     let patternPreview = document.createElement("div")
     patternPreview.className = "pattern-preview"
@@ -39,9 +39,9 @@ class Patterns {
 
     clearThenAppend(patternBox, patternPreview)
 
-    this.setColorPreviews(selectedPattern)
-    this.setColorValues(selectedPattern)
-    this.setColorSliders(selectedPattern)
+    this.setColorPreviews(currentPattern)
+    this.setColorValues(currentPattern)
+    this.setColorSliders(currentPattern)
   }
 
   renderStyle = (selectedPattern, selectedPalette = 0) => {
@@ -105,9 +105,9 @@ class Patterns {
     let color2RvalueText = document.createTextNode(`${color2RvalueInteger}`)
     let color2GvalueText = document.createTextNode(`${color2GvalueInteger}`)
     let color2BvalueText = document.createTextNode(`${color2BvalueInteger}`)
-    let color3RvalueText = ""
-    let color3GvalueText = ""
-    let color3BvalueText = ""
+    let color3RvalueText
+    let color3GvalueText
+    let color3BvalueText
 
     if (currentPalette.color3 === null) {
       color3RvalueText = document.createTextNode("...")
