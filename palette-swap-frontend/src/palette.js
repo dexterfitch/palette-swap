@@ -106,8 +106,8 @@ class Palette {
   addListenersToPalettesInGallery = () => {
     let selectablePalettes = document.getElementsByClassName("palette-preview")
 
-    for(var i = 0; i < selectablePalettes.length; i++){
-        selectablePalettes[i].addEventListener('click', this.getUpdatedStyle, true);
+    for (var i = 0; i < selectablePalettes.length; i++){
+      selectablePalettes[i].addEventListener('click', this.getUpdatedStyle, true);
     }
   }
 
@@ -125,8 +125,8 @@ class Palette {
 
     let currentPatternID = parseInt(splitPaletteIDs[0]) - 1
     let currentPaletteID = parseInt(splitPaletteIDs[1])
-
     let currentPattern = patternStart.patterns[currentPatternID]
+    debugger;
     let updatedStyle = patternStart.renderStyle(currentPattern, currentPaletteID)
 
     this.updateCurrentPatternStyle(updatedStyle, currentPattern)
