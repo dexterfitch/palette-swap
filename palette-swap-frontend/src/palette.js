@@ -129,6 +129,10 @@ class Palette {
 
     let updatedStyle = patternStart.renderStyle(currentPattern, currentPaletteID, true)
 
+
+    patternStart.createCurrentStyleTextNode(updatedStyle)
+    patternStart.generateStyleButton()
+
     this.updateCurrentPatternStyle(updatedStyle, currentPattern, currentPaletteID)
     paletteCSSBox.className = "hidden"
   }

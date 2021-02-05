@@ -14,6 +14,7 @@ window.onload = function() {
       let selectedPattern = selectPatternDropdown.value
       patternStart.renderSelectedPattern(selectedPattern - 1)
       paletteStart.filterPalettes(selectedPattern)
+      paletteCSSBox.className = "hidden"
     }
   })
 }

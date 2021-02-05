@@ -45,6 +45,8 @@ class Patterns {
     this.setColorPreviews(currentPattern)
     this.setColorValues(currentPattern)
     this.setColorSliders(currentPattern)
+    this.createCurrentStyleTextNode(selectedPatternStyle)
+    this.generateStyleButton()
   }
 
   findPaletteByID = (paletteID) => {
