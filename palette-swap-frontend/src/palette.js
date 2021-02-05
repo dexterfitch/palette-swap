@@ -132,7 +132,6 @@ class Palette {
 
     patternStart.createCurrentStyleTextNode(updatedStyle)
     patternStart.generateStyleButton()
-    patternStart.generateSaveButton()
 
     this.updateCurrentPatternStyle(updatedStyle, currentPattern, currentPaletteID)
     paletteCSSBox.className = "hidden"

@@ -47,7 +47,6 @@ class Patterns {
     this.setColorSliders(currentPattern)
     this.createCurrentStyleTextNode(selectedPatternStyle)
     this.generateStyleButton()
-    this.generateSaveButton()
   }
 
   findPaletteByID = (paletteID) => {
@@ -189,54 +188,63 @@ class Patterns {
         let color1RvalueText = document.createTextNode(`${color1Rvalue}`)
         clearThenAppend(paletteColor1Rvalue, color1RvalueText)
         this.updateColorPreview(color1Rvalue, clickedSlider.id)
+        this.generateSaveButton()
       break
       case "color1-g":
         let color1Gvalue = clickedSlider.value
         let color1GvalueText = document.createTextNode(`${color1Gvalue}`)
         clearThenAppend(paletteColor1Gvalue, color1GvalueText)
         this.updateColorPreview(color1Gvalue, clickedSlider.id)
+        this.generateSaveButton()
       break
       case "color1-b":
         let color1Bvalue = clickedSlider.value
         let color1BvalueText = document.createTextNode(`${color1Bvalue}`)
         clearThenAppend(paletteColor1Bvalue, color1BvalueText)
         this.updateColorPreview(color1Bvalue, clickedSlider.id)
+        this.generateSaveButton()
       break
       case "color2-r":
         let color2Rvalue = clickedSlider.value
         let color2RvalueText = document.createTextNode(`${color2Rvalue}`)
         clearThenAppend(paletteColor2Rvalue, color2RvalueText)
         this.updateColorPreview(color2Rvalue, clickedSlider.id)
+        this.generateSaveButton()
       break
       case "color2-g":
         let color2Gvalue = clickedSlider.value
         let color2GvalueText = document.createTextNode(`${color2Gvalue}`)
         clearThenAppend(paletteColor2Gvalue, color2GvalueText)
         this.updateColorPreview(color2Gvalue, clickedSlider.id)
+        this.generateSaveButton()
       break
       case "color2-b":
         let color2Bvalue = clickedSlider.value
         let color2BvalueText = document.createTextNode(`${color2Bvalue}`)
         clearThenAppend(paletteColor2Bvalue, color2BvalueText)
         this.updateColorPreview(color2Bvalue, clickedSlider.id)
+        this.generateSaveButton()
       break
       case "color3-r":
         let color3Rvalue = clickedSlider.value
         let color3RvalueText = document.createTextNode(`${color3Rvalue}`)
         clearThenAppend(paletteColor3Rvalue, color3RvalueText)
         this.updateColorPreview(color3Rvalue, clickedSlider.id)
+        this.generateSaveButton()
       break
       case "color3-g":
         let color3Gvalue = clickedSlider.value
         let color3GvalueText = document.createTextNode(`${color3Gvalue}`)
         clearThenAppend(paletteColor3Gvalue, color3GvalueText)
         this.updateColorPreview(color3Gvalue, clickedSlider.id)
+        this.generateSaveButton()
       break
       case "color3-b":
         let color3Bvalue = clickedSlider.value
         let color3BvalueText = document.createTextNode(`${color3Bvalue}`)
         clearThenAppend(paletteColor3Bvalue, color3BvalueText)
         this.updateColorPreview(color3Bvalue, clickedSlider.id)
+        this.generateSaveButton()
       break
     }
   }
@@ -408,11 +416,67 @@ class Patterns {
 
     clearThenAppend(saveStyleButtonBox, saveButton)
 
-    saveButton.addEventListener("click", this.savePalettetoPattern, false)
+    saveButton.addEventListener("click", this.parsePalette, false)
   }
 
-  savePalettetoPattern = () => {
-    console.log("clicked!")
+  parsePalette = () => {
+    let patternID = selectPatternDropdown.options.selectedIndex - 1
+
+    let paletteNameInput = paletteName.firstChild.value
+
+    let paletteColor1RvalueText = paletteColor1Rvalue.textContent
+    let paletteColor1GvalueText = paletteColor1Gvalue.textContent
+    let paletteColor1BvalueText = paletteColor1Bvalue.textContent
+    let paletteColor2RvalueText = paletteColor2Rvalue.textContent
+    let paletteColor2GvalueText = paletteColor2Gvalue.textContent
+    let paletteColor2BvalueText = paletteColor2Bvalue.textContent
+    let paletteColor3RvalueText = paletteColor3Rvalue.textContent
+    let paletteColor3GvalueText = paletteColor3Gvalue.textContent
+    let paletteColor3BvalueText = paletteColor3Bvalue.textContent
+
+    let color1RGB = paletteColor1RvalueText + "," + paletteColor1GvalueText + "," + paletteColor1BvalueText
+    let color2RGB = paletteColor2RvalueText + "," + paletteColor2GvalueText + "," + paletteColor2BvalueText
+    let color3RGB = paletteColor3RvalueText + "," + paletteColor3GvalueText + "," + paletteColor3BvalueText
+
+    this.createNewPalette(paletteNameInput, color1RGB, color2RGB, color3RGB, patternID).then(palette => {
+      let newPalette = new Palette(palette)
+      paletteStart.palettes.push(newPalette)
+    })
+  }
+
+  createNewPalette = (name, color1, color2, color3, pattern_id) => {
+    let newPalette = { 
+      "name": name, 
+      "color1": color1, 
+      "color2": color2, 
+      "color3": color3, 
+      "pattern_id": pattern_id 
+    }
+
+    if (name === "") {
+      alert("give us a name")
+      this.generateSaveButton()
+    }
+
+    if (color3 === "...,...,...") {
+      newPalette = { 
+        "name": name, 
+        "color1": color1, 
+        "color2": color2, 
+        "pattern_id": pattern_id 
+      }
+    }
+
+    return fetch(PALETTES_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(newPalette)
+    })
+    .then(response => (response.json()))
+    .catch(error => console.log(error))
   }
 }
 
