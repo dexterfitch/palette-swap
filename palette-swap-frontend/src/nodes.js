@@ -6,6 +6,8 @@ window.paletteBox = document.getElementById("palette-box")
 window.selectPaletteBox = document.getElementById("palette-selection-box")
 window.paletteButtonBox = document.getElementById("palette-button-box")
 window.paletteCSSBox = document.getElementById("palette-css-box")
+window.paletteCSSBoxText = document.getElementById("palette-css-box-text")
+window.paletteCSSBoxTextarea = document.getElementById("palette-css-box-textarea")
 
 // Buttons
 window.generateStyleButtonBox = document.getElementById("generate-style-button-box")

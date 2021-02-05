@@ -106,6 +106,12 @@
   background-color: #FFF;
 }
 
+.copyTextarea {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
 .form-field {
   margin-top: 7px;
   margin-bottom: 4px;
@@ -115,17 +121,28 @@
   outline: none;
 }
 
-.btn-outline-dark, .btn-dark {
+.btn-outline-light, .btn-outline-dark, .btn-dark {
   border-radius: 0;
 }
 
-.btn-outline-dark:focus, .btn-dark:focus {
+.btn-outline-light:focus, .btn-outline-dark:focus, .btn-dark:focus {
   box-shadow: none;
 }
 
 .btn-dark:hover, .btn-dark:focus {
   color: #000;
   background-color: #FFF;
+}
+
+.btn-outline-light {
+  color: #00ff00;
+  border-color: #00ff00;
+}
+
+.btn-outline-light:hover, .btn-outline-light:focus {
+  color: #000;
+  background-color: #00ff00;
+  border-color: #000;
 }
 
 .hidden {

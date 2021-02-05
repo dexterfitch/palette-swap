@@ -376,7 +376,27 @@ class Patterns {
     let paletteCSS = document.createElement("p")
     paletteCSS.appendChild(currentStyleTextNode)
 
-    clearThenAppend(paletteCSSBox, paletteCSS)
+    clearThenAppend(paletteCSSBoxText, paletteCSS)
+
+    let styleCopyButton = document.createElement("button")
+    styleCopyButton.id = "copy-style-button"
+    styleCopyButton.className = "btn btn-outline-light"
+    let styleCopyButtonText = document.createTextNode("Copy")
+    styleCopyButton.appendChild(styleCopyButtonText)
+
+    let paletteCSSTextarea = document.createElement("textarea")
+    paletteCSSTextarea.className = "copyTextarea"
+    paletteCSSTextarea.value = currentStyleTextNode.textContent
+
+    clearThenAppend(paletteCSSBoxTextarea, paletteCSSTextarea)
+
+    styleCopyButton.addEventListener("click", () => {
+      paletteCSSTextarea.select()
+      document.execCommand("copy")
+    })
+
+    paletteCSSBoxTextarea.appendChild(styleCopyButton)
+
   }
 
   generateSaveButton = () => {
