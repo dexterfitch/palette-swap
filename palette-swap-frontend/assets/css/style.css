@@ -82,6 +82,16 @@
   margin-top: 20px;
 }
 
+#palette-css-box {
+  margin-top: 20px;
+  border: 5px solid #000;
+  background-color: #666;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 14px;
+  color: #00ff00;
+}
+
 .hidden {
   display: none;
 }

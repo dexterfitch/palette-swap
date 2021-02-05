@@ -117,7 +117,7 @@ class Palette {
 
     if(event.target.parentElement.className === "col-4" || event.target.parentElement.className === "palette-name") {
       clickedPaletteIDs = event.target.parentElement.parentElement.parentElement.id
-      splitPaletteIDs= clickedPaletteIDs.split(" - ")
+      splitPaletteIDs = clickedPaletteIDs.split(" - ")
     } else if (event.target.parentElement.className === "row") {
       clickedPaletteIDs = event.target.parentElement.parentElement.id
       splitPaletteIDs = clickedPaletteIDs.split(" - ")
@@ -127,16 +127,18 @@ class Palette {
     let currentPaletteID = parseInt(splitPaletteIDs[1])
     let currentPattern = patternStart.patterns[currentPatternID]
 
-    let updatedStyle = patternStart.renderStyle(currentPattern, currentPaletteID)
+    let updatedStyle = patternStart.renderStyle(currentPattern, currentPaletteID, true)
 
-    this.updateCurrentPatternStyle(updatedStyle, currentPattern)
+    this.updateCurrentPatternStyle(updatedStyle, currentPattern, currentPaletteID)
+    paletteCSSBox.className = "hidden"
   }
 
-  updateCurrentPatternStyle = (updatedStyle, currentPattern) => {
+  updateCurrentPatternStyle = (updatedStyle, currentPattern, currentPaletteID) => {
     let patternPreview = document.getElementsByClassName("pattern-preview")
 
     patternPreview[0].setAttribute("style", updatedStyle)
 
+    patternStart.getRGBValues(currentPattern, currentPaletteID)
     patternStart.setColorPreviews(currentPattern)
     patternStart.setColorValues(currentPattern)
     patternStart.setColorSliders(currentPattern)

@@ -41,13 +41,28 @@ class Patterns {
 
     clearThenAppend(patternBox, patternPreview)
 
+    this.getRGBValues(currentPattern)
     this.setColorPreviews(currentPattern)
     this.setColorValues(currentPattern)
     this.setColorSliders(currentPattern)
   }
 
-  renderStyle = (selectedPattern, selectedPalette = 1) => {
-    window.currentPalette = currentPalettes[selectedPalette - 1]
+  findPaletteByID = (paletteID) => {
+    let palettes = paletteStart.palettes
+
+    palettes.forEach(palette => {
+      if (parseInt(palette.id) === paletteID) {
+        currentPalette = palette.attributes
+      }
+    })
+  }
+
+  renderStyle = (selectedPattern, selectedPalette = 0, nextPass = false) => {
+    if (nextPass) {
+      this.findPaletteByID(selectedPalette)
+    } else {
+      window.currentPalette = currentPalettes[selectedPalette]
+    }
 
     let patternStyleRaw = selectedPattern.style
 
@@ -63,6 +78,8 @@ class Patterns {
   }
 
   getRGBValues = (selectedPattern, selectedPalette = 1) => {
+    this.findPaletteByID(selectedPalette)
+
     let color1valueString = currentPalette.color1
     let color2valueString = currentPalette.color2
     let color3valueString = currentPalette.color3
@@ -95,8 +112,6 @@ class Patterns {
   }
 
   setColorValues = (selectedPattern) => {
-    this.getRGBValues(selectedPattern)
-
     let paletteNameH3 = document.createElement("h3")
     let paletteNameText = document.createTextNode(`${currentPalette.name}`)
     paletteNameH3.appendChild(paletteNameText)
@@ -137,8 +152,6 @@ class Patterns {
   }
 
   setColorSliders = (selectedPattern) => {
-    this.getRGBValues(selectedPattern)
-
     color1Rslider.value = color1RvalueInteger
     color1Gslider.value = color1GvalueInteger
     color1Bslider.value = color1BvalueInteger
@@ -155,7 +168,7 @@ class Patterns {
   addListenersToSliders = () => {
     let sliders = document.getElementsByClassName("slider")
 
-    for (var i = 0; i < sliders.length; i++){
+    for (var i = 0; i < sliders.length; i++) {
       sliders[i].addEventListener('mouseup', this.updateColorValues, false);
     }
   }
@@ -246,6 +259,7 @@ class Patterns {
           color1ColorPreview.setAttribute("style", `background-color: rgb(${rgbValues});`)
           this.updatePatternPreview(colorNumber, rgbValues)
         }
+        paletteCSSBox.className = "hidden"
         this.clearStyleName()
         this.generateStyleButton()
       break
@@ -269,6 +283,7 @@ class Patterns {
           color2ColorPreview.setAttribute("style", `background-color: rgb(${rgbValues});`)
           this.updatePatternPreview(colorNumber, rgbValues)
         }
+        paletteCSSBox.className = "hidden"
         this.clearStyleName()
         this.generateStyleButton()
       break
@@ -292,6 +307,7 @@ class Patterns {
           color3ColorPreview.setAttribute("style", `background-color: rgb(${rgbValues});`)
           this.updatePatternPreview(colorNumber, rgbValues)
         }
+        paletteCSSBox.className = "hidden"
         this.clearStyleName()
         this.generateStyleButton()
       break
@@ -306,16 +322,19 @@ class Patterns {
       let color2rgb = `${paletteColor2Rvalue.textContent}, ${paletteColor2Gvalue.textContent}, ${paletteColor2Bvalue.textContent}`
       let color3rgb = `${paletteColor3Rvalue.textContent}, ${paletteColor3Gvalue.textContent}, ${paletteColor3Bvalue.textContent}`
       let currentPatternStyle = patternStyleRaw.replace(/COLOR1/g, rgbValues).replace(/COLOR2/g, color2rgb).replace(/COLOR3/g, color3rgb)
+      this.createCurrentStyleTextNode(currentPatternStyle)
       patternPreview.setAttribute("style", currentPatternStyle)
     } else if (colorNumber === "color2") {
       let color1rgb = `${paletteColor1Rvalue.textContent}, ${paletteColor1Gvalue.textContent}, ${paletteColor1Bvalue.textContent}`
       let color3rgb = `${paletteColor3Rvalue.textContent}, ${paletteColor3Gvalue.textContent}, ${paletteColor3Bvalue.textContent}`
       let currentPatternStyle = patternStyleRaw.replace(/COLOR1/g, color1rgb).replace(/COLOR2/g, rgbValues).replace(/COLOR3/g, color3rgb)
+      this.createCurrentStyleTextNode(currentPatternStyle)
       patternPreview.setAttribute("style", currentPatternStyle)
     } else if (colorNumber === "color3") {
       let color1rgb = `${paletteColor1Rvalue.textContent}, ${paletteColor1Gvalue.textContent}, ${paletteColor1Bvalue.textContent}`
       let color2rgb = `${paletteColor2Rvalue.textContent}, ${paletteColor2Gvalue.textContent}, ${paletteColor2Bvalue.textContent}`
       let currentPatternStyle = patternStyleRaw.replace(/COLOR1/g, color1rgb).replace(/COLOR2/g, color2rgb).replace(/COLOR3/g, rgbValues)
+      this.createCurrentStyleTextNode(currentPatternStyle)
       patternPreview.setAttribute("style", currentPatternStyle)
     }
   }
@@ -324,7 +343,7 @@ class Patterns {
     let unsaved = document.createElement("h3")
     let unsavedText = document.createTextNode("unsaved")
     unsaved.appendChild(unsavedText)
-    
+
     clearThenAppend(paletteName, unsaved)
   }
 
@@ -340,11 +359,14 @@ class Patterns {
     styleButton.addEventListener('click', this.generateStyleCopyBox, false);
   }
 
+  createCurrentStyleTextNode = (currentPatternStyle) => {
+    window.currentStyleTextNode = document.createTextNode(`${currentPatternStyle}`)
+  }
+
   generateStyleCopyBox = () => {
+    paletteCSSBox.className = ""
     let paletteCSS = document.createElement("p")
-    paletteCSS.className = "css-text"
-    let paletteCSSText = document.createTextNode("Button Clicked")
-    paletteCSS.appendChild(paletteCSSText)
+    paletteCSS.appendChild(currentStyleTextNode)
 
     clearThenAppend(paletteCSSBox, paletteCSS)
   }
