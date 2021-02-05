@@ -48,7 +48,7 @@ class Patterns {
 
   renderStyle = (selectedPattern, selectedPalette = 1) => {
     window.currentPalette = currentPalettes[selectedPalette - 1]
-    
+
     let patternStyleRaw = selectedPattern.style
 
     let selectedPatternStyle = patternStyleRaw.replace(/COLOR1/g, currentPalette.color1).replace(/COLOR2/g, currentPalette.color2).replace(/COLOR3/g, currentPalette.color3)
@@ -246,6 +246,7 @@ class Patterns {
           color1ColorPreview.setAttribute("style", `background-color: rgb(${rgbValues});`)
           this.updatePatternPreview(colorNumber, rgbValues)
         }
+        this.clearStyleName()
       break
       case "color2":
         if (colorLetter === "r") {
@@ -267,6 +268,7 @@ class Patterns {
           color2ColorPreview.setAttribute("style", `background-color: rgb(${rgbValues});`)
           this.updatePatternPreview(colorNumber, rgbValues)
         }
+        this.clearStyleName()
       break
       case "color3":
         if (colorLetter === "r") {
@@ -288,8 +290,16 @@ class Patterns {
           color3ColorPreview.setAttribute("style", `background-color: rgb(${rgbValues});`)
           this.updatePatternPreview(colorNumber, rgbValues)
         }
+        this.clearStyleName()
       break
     }
+  }
+
+  clearStyleName = () => {
+    let unsaved = document.createElement("h3")
+    let unsavedText = document.createTextNode("unsaved")
+    unsaved.appendChild(unsavedText)
+    clearThenAppend(paletteName, unsaved)
   }
 
   updatePatternPreview = (colorNumber, rgbValues) => {
