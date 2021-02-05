@@ -78,6 +78,10 @@
   color: white;
 }
 
+#generate-style-button-box {
+  margin-top: 20px;
+}
+
 .hidden {
   display: none;
 }

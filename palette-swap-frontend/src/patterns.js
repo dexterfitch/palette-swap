@@ -156,7 +156,7 @@ class Patterns {
     let sliders = document.getElementsByClassName("slider")
 
     for (var i = 0; i < sliders.length; i++){
-      sliders[i].addEventListener('mouseup', this.updateColorValues, true);
+      sliders[i].addEventListener('mouseup', this.updateColorValues, false);
     }
   }
 
@@ -247,6 +247,7 @@ class Patterns {
           this.updatePatternPreview(colorNumber, rgbValues)
         }
         this.clearStyleName()
+        this.generateStyleButton()
       break
       case "color2":
         if (colorLetter === "r") {
@@ -269,6 +270,7 @@ class Patterns {
           this.updatePatternPreview(colorNumber, rgbValues)
         }
         this.clearStyleName()
+        this.generateStyleButton()
       break
       case "color3":
         if (colorLetter === "r") {
@@ -291,15 +293,9 @@ class Patterns {
           this.updatePatternPreview(colorNumber, rgbValues)
         }
         this.clearStyleName()
+        this.generateStyleButton()
       break
     }
-  }
-
-  clearStyleName = () => {
-    let unsaved = document.createElement("h3")
-    let unsavedText = document.createTextNode("unsaved")
-    unsaved.appendChild(unsavedText)
-    clearThenAppend(paletteName, unsaved)
   }
 
   updatePatternPreview = (colorNumber, rgbValues) => {
@@ -324,5 +320,33 @@ class Patterns {
     }
   }
 
+  clearStyleName = () => {
+    let unsaved = document.createElement("h3")
+    let unsavedText = document.createTextNode("unsaved")
+    unsaved.appendChild(unsavedText)
+    
+    clearThenAppend(paletteName, unsaved)
+  }
+
+  generateStyleButton = () => {
+    let styleButton = document.createElement("button")
+    styleButton.id = "generate-style-button"
+    styleButton.className = "btn btn-dark"
+    let styleButtonText = document.createTextNode("Generate CSS")
+    styleButton.appendChild(styleButtonText)
+
+    clearThenAppend(generateStyleButtonBox, styleButton)
+
+    styleButton.addEventListener('click', this.generateStyleCopyBox, false);
+  }
+
+  generateStyleCopyBox = () => {
+    let paletteCSS = document.createElement("p")
+    paletteCSS.className = "css-text"
+    let paletteCSSText = document.createTextNode("Button Clicked")
+    paletteCSS.appendChild(paletteCSSText)
+
+    clearThenAppend(paletteCSSBox, paletteCSS)
+  }
 }
 

@@ -126,7 +126,7 @@ class Palette {
     let currentPatternID = parseInt(splitPaletteIDs[0]) - 1
     let currentPaletteID = parseInt(splitPaletteIDs[1])
     let currentPattern = patternStart.patterns[currentPatternID]
-    debugger;
+
     let updatedStyle = patternStart.renderStyle(currentPattern, currentPaletteID)
 
     this.updateCurrentPatternStyle(updatedStyle, currentPattern)

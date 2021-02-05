@@ -1,8 +1,15 @@
+// Containers
 window.selectPatternDropdown = document.getElementById("patterns-dropdown")
 window.patternBox = document.getElementById("pattern-box")
 window.palette = document.getElementById("palette")
 window.paletteBox = document.getElementById("palette-box")
 window.selectPaletteBox = document.getElementById("palette-selection-box")
+window.paletteButtonBox = document.getElementById("palette-button-box")
+window.paletteCSSBox = document.getElementById("palette-css-box")
+
+// Buttons
+window.generateStyleButtonBox = document.getElementById("generate-style-button-box")
+window.saveStyleButtonBox = document.getElementById("save-style-button-box")
 
 // Palette Color Sections
 window.color1Section = document.getElementById("palette-color1")
