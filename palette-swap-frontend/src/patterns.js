@@ -47,6 +47,7 @@ class Patterns {
     this.setColorSliders(currentPattern)
     this.createCurrentStyleTextNode(selectedPatternStyle)
     this.generateStyleButton()
+    this.generateSaveButton()
   }
 
   findPaletteByID = (paletteID) => {
@@ -346,11 +347,12 @@ class Patterns {
   }
 
   clearStyleName = () => {
-    let unsaved = document.createElement("h3")
-    let unsavedText = document.createTextNode("unsaved")
-    unsaved.appendChild(unsavedText)
+    let nameField = document.createElement("input")
+    nameField.type = "text"
+    nameField.className = "form-field"
+    nameField.placeholder = "name your creation"
 
-    clearThenAppend(paletteName, unsaved)
+    clearThenAppend(paletteName, nameField)
   }
 
   generateStyleButton = () => {
@@ -362,7 +364,7 @@ class Patterns {
 
     clearThenAppend(generateStyleButtonBox, styleButton)
 
-    styleButton.addEventListener('click', this.generateStyleCopyBox, false);
+    styleButton.addEventListener("click", this.generateStyleCopyBox, false);
   }
 
   createCurrentStyleTextNode = (currentPatternStyle) => {
@@ -375,6 +377,22 @@ class Patterns {
     paletteCSS.appendChild(currentStyleTextNode)
 
     clearThenAppend(paletteCSSBox, paletteCSS)
+  }
+
+  generateSaveButton = () => {
+    let saveButton = document.createElement("button")
+    saveButton.id = "generate-save-button"
+    saveButton.className = "btn btn-outline-dark"
+    let saveButtonText = document.createTextNode("Save Palette")
+    saveButton.appendChild(saveButtonText)
+
+    clearThenAppend(saveStyleButtonBox, saveButton)
+
+    saveButton.addEventListener("click", this.savePalettetoPattern, false)
+  }
+
+  savePalettetoPattern = () => {
+    console.log("clicked!")
   }
 }
 
