@@ -138,7 +138,7 @@ class Palette {
 
     patternPreview[0].setAttribute("style", updatedStyle)
 
-    patternStart.getRGBValues(currentPattern, currentPaletteID)
+    patternStart.getRGBValues(currentPattern, currentPaletteID, true)
     patternStart.setColorPreviews(currentPattern)
     patternStart.setColorValues(currentPattern)
     patternStart.setColorSliders(currentPattern)

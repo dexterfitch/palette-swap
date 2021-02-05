@@ -32,7 +32,7 @@ class Patterns {
   renderSelectedPattern = (selectedPatternId) => {
     let currentPattern = this.patterns[selectedPatternId]
     window.currentPalettes = currentPattern.palettes
-    let selectedPatternStyle = this.renderStyle(currentPattern)
+    let selectedPatternStyle = this.renderStyle(currentPattern, currentPattern.palettes[0])
 
     palette.className = "palette"
     let patternPreview = document.createElement("div")
@@ -41,7 +41,7 @@ class Patterns {
 
     clearThenAppend(patternBox, patternPreview)
 
-    this.getRGBValues(currentPattern)
+    this.getRGBValues(currentPattern, currentPattern.palettes[0])
     this.setColorPreviews(currentPattern)
     this.setColorValues(currentPattern)
     this.setColorSliders(currentPattern)
@@ -57,11 +57,11 @@ class Patterns {
     })
   }
 
-  renderStyle = (selectedPattern, selectedPalette = 0, nextPass = false) => {
+  renderStyle = (selectedPattern, selectedPalette, nextPass = false) => {
     if (nextPass) {
       this.findPaletteByID(selectedPalette)
     } else {
-      window.currentPalette = currentPalettes[selectedPalette]
+      window.currentPalette = selectedPalette
     }
 
     let patternStyleRaw = selectedPattern.style
@@ -77,8 +77,12 @@ class Patterns {
     return selectedPatternStyle
   }
 
-  getRGBValues = (selectedPattern, selectedPalette = 1) => {
-    this.findPaletteByID(selectedPalette)
+  getRGBValues = (selectedPattern, selectedPalette, nextPass = false) => {
+    if (nextPass) {
+      this.findPaletteByID(selectedPalette)
+    } else {
+      window.currentPalette = selectedPalette
+    }
 
     let color1valueString = currentPalette.color1
     let color2valueString = currentPalette.color2
