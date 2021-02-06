@@ -3,6 +3,7 @@ class Patterns {
   constructor(name, style) {
     this.name = name;
     this.style = style;
+    this.palettes = [];
     this.patterns = [];
   }
 
@@ -14,8 +15,13 @@ class Patterns {
 
   renderPatterns = (patterns) => {
     patterns.data.forEach(pattern => {
+      Object.defineProperty(pattern.attributes, 'palettes', {
+        value: pattern.relationships.palettes.data
+      })
+
       this.patterns.push(pattern.attributes)
     })
+
     this.patterns.forEach(pattern => {
       this.renderPatternDropdown(pattern)
     })
@@ -31,8 +37,8 @@ class Patterns {
 
   renderSelectedPattern = (selectedPatternId) => {
     let currentPattern = this.patterns[selectedPatternId]
-    window.currentPalettes = currentPattern.palettes
-    let selectedPatternStyle = this.renderStyle(currentPattern, currentPattern.palettes[0])
+    let currentPalettes = currentPattern.palettes
+    let selectedPatternStyle = this.renderStyle(currentPattern, currentPattern.palettes[0].id)
 
     palette.className = "palette"
     let patternPreview = document.createElement("div")
@@ -41,33 +47,15 @@ class Patterns {
 
     clearThenAppend(patternBox, patternPreview)
 
-    this.getRGBValues(currentPattern, currentPattern.palettes[0])
-    this.setColorPreviews(currentPattern)
-    this.setColorValues(currentPattern)
-    this.setColorSliders(currentPattern)
+    this.getRGBValues(currentPattern, currentPattern.palettes[0].id)
     this.createCurrentStyleTextNode(selectedPatternStyle)
     this.generateStyleButton()
   }
 
-  findPaletteByID = (paletteID) => {
-    let palettes = paletteStart.palettes
-
-    palettes.forEach(palette => {
-      if (parseInt(palette.id) === paletteID) {
-        currentPalette = palette.attributes
-      }
-    })
-  }
-
-  renderStyle = (selectedPattern, selectedPalette, nextPass = false) => {
-    if (nextPass) {
-      this.findPaletteByID(selectedPalette)
-    } else {
-      window.currentPalette = selectedPalette
-    }
-
+  renderStyle = (selectedPattern, selectedPaletteID) => {
+    let allPalettes = paletteStart.palettes
+    let currentPalette = allPalettes.find(pal => pal.id == selectedPaletteID).attributes
     let patternStyleRaw = selectedPattern.style
-
     let selectedPatternStyle = patternStyleRaw.replace(/COLOR1/g, currentPalette.color1).replace(/COLOR2/g, currentPalette.color2).replace(/COLOR3/g, currentPalette.color3)
 
     if(currentPalette.color3 === null) {
@@ -79,13 +67,9 @@ class Patterns {
     return selectedPatternStyle
   }
 
-  getRGBValues = (selectedPattern, selectedPalette, nextPass = false) => {
-    if (nextPass) {
-      this.findPaletteByID(selectedPalette)
-    } else {
-      window.currentPalette = selectedPalette
-    }
-
+  getRGBValues = (selectedPattern, selectedPaletteID) => {
+    let allPalettes = paletteStart.palettes
+    let currentPalette = allPalettes[selectedPaletteID - 1].attributes
     let color1valueString = currentPalette.color1
     let color2valueString = currentPalette.color2
     let color3valueString = currentPalette.color3
@@ -106,18 +90,21 @@ class Patterns {
       window.color3BvalueInteger = color3valueString.split(",")[2].replace(" ", "")
     }
 
+    this.setColorPreviews(selectedPattern, currentPalette)
   }
 
-  setColorPreviews = (selectedPattern) => {
+  setColorPreviews = (selectedPattern, currentPalette) => {
     color1ColorPreview.setAttribute("style", `background-color: rgb(${currentPalette.color1});`)
     color2ColorPreview.setAttribute("style", `background-color: rgb(${currentPalette.color2});`)
 
     if (!(currentPalette.color3 === null)) {
       color3ColorPreview.setAttribute("style", `background-color: rgb(${currentPalette.color3});`)
     }
+
+    this.setColorValues(selectedPattern, currentPalette)
   }
 
-  setColorValues = (selectedPattern) => {
+  setColorValues = (selectedPattern, currentPalette) => {
     let paletteNameH3 = document.createElement("h3")
     let paletteNameText = document.createTextNode(`${currentPalette.name}`)
     paletteNameH3.appendChild(paletteNameText)
@@ -155,9 +142,11 @@ class Patterns {
     clearThenAppend(paletteColor3Bvalue, color3BvalueText)
 
     this.addListenersToSliders()
+
+    this.setColorSliders(selectedPattern, currentPalette)
   }
 
-  setColorSliders = (selectedPattern) => {
+  setColorSliders = (selectedPattern, currentPalette) => {
     color1Rslider.value = color1RvalueInteger
     color1Gslider.value = color1GvalueInteger
     color1Bslider.value = color1BvalueInteger
@@ -364,6 +353,7 @@ class Patterns {
   }
 
   generateStyleButton = () => {
+    saveStyleButtonBox.className = ""
     let styleButton = document.createElement("button")
     styleButton.id = "generate-style-button"
     styleButton.className = "btn btn-dark"

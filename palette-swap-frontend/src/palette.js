@@ -127,7 +127,7 @@ class Palette {
     let currentPaletteID = parseInt(splitPaletteIDs[1])
     let currentPattern = patternStart.patterns[currentPatternID]
 
-    let updatedStyle = patternStart.renderStyle(currentPattern, currentPaletteID, true)
+    let updatedStyle = patternStart.renderStyle(currentPattern, currentPaletteID)
 
 
     patternStart.createCurrentStyleTextNode(updatedStyle)
@@ -135,6 +135,7 @@ class Palette {
 
     this.updateCurrentPatternStyle(updatedStyle, currentPattern, currentPaletteID)
     paletteCSSBox.className = "hidden"
+    saveStyleButtonBox.className = "hidden"
   }
 
   updateCurrentPatternStyle = (updatedStyle, currentPattern, currentPaletteID) => {
@@ -142,9 +143,6 @@ class Palette {
 
     patternPreview[0].setAttribute("style", updatedStyle)
 
-    patternStart.getRGBValues(currentPattern, currentPaletteID, true)
-    patternStart.setColorPreviews(currentPattern)
-    patternStart.setColorValues(currentPattern)
-    patternStart.setColorSliders(currentPattern)
+    patternStart.getRGBValues(currentPattern, currentPaletteID)
   }
 }
