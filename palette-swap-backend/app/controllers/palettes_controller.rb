@@ -1,7 +1,13 @@
 class PalettesController < ApplicationController
+  before_action :set_palette, only: [:show, :destroy]
+
   def index
     palettes = Palette.all
     render json: PaletteSerializer.new(palettes)
+  end
+
+  def show
+    render json: PaletteSerializer.new(@palette)
   end
 
   def create
@@ -15,11 +21,14 @@ class PalettesController < ApplicationController
   end
 
   def destroy
-    palette = Palette.find(params[:id])
-    palette.destroy
+    @palette.destroy
   end
 
   private
+
+  def set_palette
+    @palette = Palette.find(params[:id])
+  end 
 
   def palette_params
     params.require(:palette).permit(:name, :color1, :color2, :color3, :pattern_id)

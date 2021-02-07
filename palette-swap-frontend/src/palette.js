@@ -88,6 +88,14 @@ class Palette {
         palettePreviewColor3Inner.setAttribute("style", `background-color: rgb(${paletteColor3})`)
       }
 
+      let deleteButton = document.createElement("button")
+      deleteButton.id = `delete-button-${paletteId}`
+      deleteButton.className = "btn btn-outline-dark delete-button"
+
+      let deleteButtonText = document.createTextNode("✖")
+      deleteButton.appendChild(deleteButtonText)
+      palettePreview.appendChild(deleteButton)
+
       palettePreviewColor1.appendChild(palettePreviewColor1Inner)
       palettePreviewColor2.appendChild(palettePreviewColor2Inner)
       palettePreviewColor3.appendChild(palettePreviewColor3Inner)
@@ -102,42 +110,64 @@ class Palette {
       selectPaletteBox.appendChild(palettePreview)
     })
 
+    let defaultPaletteID = selectPaletteBox.firstElementChild.id.split('- ')[1]
+
+    if (defaultPaletteID) {
+      selectPaletteBox.firstElementChild.firstElementChild.remove()
+    }
+
     this.addListenersToPalettesInGallery()
+    this.addListenersToDeleteButtons()
   }
 
   addListenersToPalettesInGallery = () => {
     let selectablePalettes = document.getElementsByClassName("palette-preview")
 
-    for (var i = 0; i < selectablePalettes.length; i++){
-      selectablePalettes[i].addEventListener('click', this.getUpdatedStyle, true);
+    for (var i = 0; i < selectablePalettes.length; i++) {
+      selectablePalettes[i].addEventListener("click", this.getUpdatedStyle, true);
+    }
+  }
+
+  addListenersToDeleteButtons = () => {
+    let deleteButtons = document.getElementsByClassName("delete-button")
+
+    for (var i = 0; i < deleteButtons.length; i++) {
+      let currentDeleteButtonID = deleteButtons[i].id
+      let currentDeleteButtonIDNumber = currentDeleteButtonID.split('- ')[1]
+
+      deleteButtons[i].addEventListener("click", this.deletePalette, true)
     }
   }
 
   getUpdatedStyle = () => {
-    let clickedPaletteIDs
-    let splitPaletteIDs
-
-    if(event.target.parentElement.className === "col-4" || event.target.parentElement.className === "palette-name") {
-      clickedPaletteIDs = event.target.parentElement.parentElement.parentElement.id
-      splitPaletteIDs = clickedPaletteIDs.split(" - ")
-    } else if (event.target.parentElement.className === "row") {
-      clickedPaletteIDs = event.target.parentElement.parentElement.id
-      splitPaletteIDs = clickedPaletteIDs.split(" - ")
+    if (event.target.className === "btn btn-outline-dark delete-button") {
+      event.preventDefault()
+    } else {
+      let clickedPaletteIDs
+      let splitPaletteIDs
+  
+      if(event.target.parentElement.className === "col-4" || event.target.parentElement.className === "palette-name") {
+        clickedPaletteIDs = event.target.parentElement.parentElement.parentElement.id
+        splitPaletteIDs = clickedPaletteIDs.split(" - ")
+      } else if (event.target.parentElement.className === "row") {
+        clickedPaletteIDs = event.target.parentElement.parentElement.id
+        splitPaletteIDs = clickedPaletteIDs.split(" - ")
+      }
+  
+      let currentPatternID = parseInt(splitPaletteIDs[0]) - 1
+      let currentPaletteID = parseInt(splitPaletteIDs[1])
+      let currentPattern = patternStart.patterns[currentPatternID]
+  
+      let updatedStyle = patternStart.renderStyle(currentPattern, currentPaletteID)
+  
+  
+      this.createCurrentStyleTextNode(updatedStyle)
+      this.generateStyleButton()
+  
+      this.updateCurrentPatternStyle(updatedStyle, currentPattern, currentPaletteID)
+      paletteCSSBox.className = "hidden"
+      saveStyleButtonBox.className = "hidden"
     }
-
-    let currentPatternID = parseInt(splitPaletteIDs[0]) - 1
-    let currentPaletteID = parseInt(splitPaletteIDs[1])
-    let currentPattern = patternStart.patterns[currentPatternID]
-
-    let updatedStyle = patternStart.renderStyle(currentPattern, currentPaletteID)
-
-
-    this.createCurrentStyleTextNode(updatedStyle)
-    this.generateStyleButton()
-
-    this.updateCurrentPatternStyle(updatedStyle, currentPattern, currentPaletteID)
-    paletteCSSBox.className = "hidden"
-    saveStyleButtonBox.className = "hidden"
   }
 
   updateCurrentPatternStyle = (updatedStyle, currentPattern, currentPaletteID) => {
@@ -279,10 +309,32 @@ class Palette {
     .catch(error => console.log(error))
   }
 
-  editPalette = () => {}
+  deletePalette = (event) => {
+    let id = event.target.id.split('-')[2]
 
-  deletePalette = () => {}
+    fetch(PALETTES_URL + `/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    })
+    .then(event.target.parentElement.remove())
+    .then(window.location.reload())
+  }
 
+  reGetPalettes = () => {
+    fetch(PALETTES_URL)
+    .then(response => response.json())
+    .then(palettes => this.rerenderPalettes(palettes))
+  }
+
+  rerenderPalettes = (palettes) => {
+    this.palettes = []
+    palettes.data.forEach(palette => {
+      this.palettes.push(palette)
+    })
+  }
 
 
 }

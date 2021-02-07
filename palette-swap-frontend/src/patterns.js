@@ -54,6 +54,7 @@ class Patterns {
 
   renderStyle = (selectedPattern, selectedPaletteID) => {
     let allPalettes = paletteStart.palettes
+
     let currentPalette = allPalettes.find(pal => pal.id == selectedPaletteID).attributes
     let patternStyleRaw = selectedPattern.style
     let selectedPatternStyle = patternStyleRaw.replace(/COLOR1/g, currentPalette.color1).replace(/COLOR2/g, currentPalette.color2).replace(/COLOR3/g, currentPalette.color3)
@@ -69,7 +70,7 @@ class Patterns {
 
   getRGBValues = (selectedPattern, selectedPaletteID) => {
     let allPalettes = paletteStart.palettes
-    let currentPalette = allPalettes[selectedPaletteID - 1].attributes
+    let currentPalette = allPalettes.find(pal => pal.id == selectedPaletteID).attributes
     let color1valueString = currentPalette.color1
     let color2valueString = currentPalette.color2
     let color3valueString = currentPalette.color3
