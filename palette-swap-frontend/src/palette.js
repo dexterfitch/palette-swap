@@ -132,8 +132,8 @@ class Palette {
     let updatedStyle = patternStart.renderStyle(currentPattern, currentPaletteID)
 
 
-    patternStart.createCurrentStyleTextNode(updatedStyle)
-    patternStart.generateStyleButton()
+    this.createCurrentStyleTextNode(updatedStyle)
+    this.generateStyleButton()
 
     this.updateCurrentPatternStyle(updatedStyle, currentPattern, currentPaletteID)
     paletteCSSBox.className = "hidden"
@@ -147,4 +147,144 @@ class Palette {
 
     patternStart.getRGBValues(currentPattern, currentPaletteID)
   }
+
+
+  clearStyleName = () => {
+    let nameField = document.createElement("input")
+    nameField.type = "text"
+    nameField.className = "form-field"
+    nameField.placeholder = "name your creation"
+
+    clearThenAppend(paletteName, nameField)
+  }
+
+  generateStyleButton = () => {
+    saveStyleButtonBox.className = ""
+    let styleButton = document.createElement("button")
+    styleButton.id = "generate-style-button"
+    styleButton.className = "btn btn-dark"
+    let styleButtonText = document.createTextNode("Generate CSS")
+    styleButton.appendChild(styleButtonText)
+
+    clearThenAppend(generateStyleButtonBox, styleButton)
+
+    styleButton.addEventListener("click", this.generateStyleCopyBox, false);
+  }
+
+  createCurrentStyleTextNode = (currentPatternStyle) => {
+    window.currentStyleTextNode = document.createTextNode(`${currentPatternStyle}`)
+  }
+
+  generateStyleCopyBox = () => {
+    paletteCSSBox.className = ""
+    let paletteCSS = document.createElement("p")
+    paletteCSS.appendChild(currentStyleTextNode)
+
+    clearThenAppend(paletteCSSBoxText, paletteCSS)
+
+    let styleCopyButton = document.createElement("button")
+    styleCopyButton.id = "copy-style-button"
+    styleCopyButton.className = "btn btn-outline-light"
+    let styleCopyButtonText = document.createTextNode("Copy")
+    styleCopyButton.appendChild(styleCopyButtonText)
+
+    let paletteCSSTextarea = document.createElement("textarea")
+    paletteCSSTextarea.className = "copyTextarea"
+    paletteCSSTextarea.value = currentStyleTextNode.textContent
+
+    clearThenAppend(paletteCSSBoxTextarea, paletteCSSTextarea)
+
+    styleCopyButton.addEventListener("click", () => {
+      paletteCSSTextarea.select()
+      document.execCommand("copy")
+    })
+
+    paletteCSSBoxTextarea.appendChild(styleCopyButton)
+
+  }
+
+  generateSaveButton = () => {
+    let saveButton = document.createElement("button")
+    saveButton.id = "generate-save-button"
+    saveButton.className = "btn btn-outline-dark"
+    let saveButtonText = document.createTextNode("Save Palette")
+    saveButton.appendChild(saveButtonText)
+
+    clearThenAppend(saveStyleButtonBox, saveButton)
+
+    saveButton.addEventListener("click", this.parsePalette, false)
+  }
+
+  parsePalette = () => {
+    let patternID = selectPatternDropdown.options.selectedIndex
+
+    let paletteNameInput = paletteName.firstChild.value
+
+    let paletteColor1RvalueText = paletteColor1Rvalue.textContent
+    let paletteColor1GvalueText = paletteColor1Gvalue.textContent
+    let paletteColor1BvalueText = paletteColor1Bvalue.textContent
+    let paletteColor2RvalueText = paletteColor2Rvalue.textContent
+    let paletteColor2GvalueText = paletteColor2Gvalue.textContent
+    let paletteColor2BvalueText = paletteColor2Bvalue.textContent
+    let paletteColor3RvalueText = paletteColor3Rvalue.textContent
+    let paletteColor3GvalueText = paletteColor3Gvalue.textContent
+    let paletteColor3BvalueText = paletteColor3Bvalue.textContent
+
+    let color1RGB = paletteColor1RvalueText + "," + paletteColor1GvalueText + "," + paletteColor1BvalueText
+    let color2RGB = paletteColor2RvalueText + "," + paletteColor2GvalueText + "," + paletteColor2BvalueText
+    let color3RGB = paletteColor3RvalueText + "," + paletteColor3GvalueText + "," + paletteColor3BvalueText
+
+    this.createNewPalette(paletteNameInput, color1RGB, color2RGB, color3RGB, patternID).then(palette => {
+      let newPalette = new Palette(palette)
+      paletteStart.palettes.push(newPalette)
+      window.location.reload()
+    })
+  }
+
+  createNewPalette = (name, color1, color2, color3, pattern_id) => {
+    let newPalette = { 
+      "name": name, 
+      "color1": color1, 
+      "color2": color2, 
+      "color3": color3, 
+      "pattern_id": pattern_id 
+    }
+
+    if (name === "") {
+      alert("give us a name")
+      this.generateSaveButton()
+      return
+    } else if (name.length > 16) {
+      alert("too long buddy, keep it less than 16 chars")
+      this.generateSaveButton()
+      return
+    }
+
+    if (color3 === "...,...,...") {
+      newPalette = { 
+        "name": name, 
+        "color1": color1, 
+        "color2": color2, 
+        "pattern_id": pattern_id 
+      }
+    }
+
+    return fetch(PALETTES_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(newPalette)
+    })
+    .then(response => (response.json()))
+    .catch(error => console.log(error))
+  }
+
+  editPalette = () => {}
+
+  deletePalette = () => {}
+
+
+
 }
