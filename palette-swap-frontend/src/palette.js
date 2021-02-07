@@ -88,13 +88,25 @@ class Palette {
         palettePreviewColor3Inner.setAttribute("style", `background-color: rgb(${paletteColor3})`)
       }
 
+      let paletteButtonSection = document.createElement("div")
+      paletteButtonSection.id = `palette-button-section-${paletteId}`
+      palettePreview.appendChild(paletteButtonSection)
+
+      let editButton = document.createElement("button")
+      editButton.id = `edit-button-${paletteId}`
+      editButton.className = "btn btn-outline-dark edit-button"
+
+      let editButtonText = document.createTextNode("🖌️")
+      editButton.appendChild(editButtonText)
+      paletteButtonSection.appendChild(editButton)
+
       let deleteButton = document.createElement("button")
       deleteButton.id = `delete-button-${paletteId}`
       deleteButton.className = "btn btn-outline-dark delete-button"
 
       let deleteButtonText = document.createTextNode("✖")
       deleteButton.appendChild(deleteButtonText)
-      palettePreview.appendChild(deleteButton)
+      paletteButtonSection.appendChild(deleteButton)
 
       palettePreviewColor1.appendChild(palettePreviewColor1Inner)
       palettePreviewColor2.appendChild(palettePreviewColor2Inner)
@@ -117,6 +129,7 @@ class Palette {
     }
 
     this.addListenersToPalettesInGallery()
+    this.addListenersToEditButtons()
     this.addListenersToDeleteButtons()
   }
 
@@ -125,6 +138,17 @@ class Palette {
 
     for (var i = 0; i < selectablePalettes.length; i++) {
       selectablePalettes[i].addEventListener("click", this.getUpdatedStyle, true);
+    }
+  }
+
+  addListenersToEditButtons = () => {
+    let editButtons = document.getElementsByClassName("edit-button")
+
+    for (var i = 0; i < editButtons.length; i++) {
+      let currentEditButtonID = editButtons[i].id
+      let currentEditButtonIDNumber = currentEditButtonID.split('- ')[1]
+
+      editButtons[i].addEventListener("click", this.createEditForm, true)
     }
   }
 
@@ -140,7 +164,7 @@ class Palette {
   }
 
   getUpdatedStyle = () => {
-    if (event.target.className === "btn btn-outline-dark delete-button") {
+    if ((event.target.className === "btn btn-outline-dark delete-button") || (event.target.className === "btn btn-outline-dark edit-button")) {
       event.preventDefault()
     } else {
       let clickedPaletteIDs
@@ -323,18 +347,31 @@ class Palette {
     .then(window.location.reload())
   }
 
-  reGetPalettes = () => {
-    fetch(PALETTES_URL)
-    .then(response => response.json())
-    .then(palettes => this.rerenderPalettes(palettes))
+  createEditForm = (event) => {
+    let id = event.target.id.split('-')[2]
+
+    let newNameModal = document.createElement("div")
+    newNameModal.className = "name-modal"
+
+    let newNamePrompt = document.createElement("h5")
+    let newNamePromptText = document.createTextNode("enter a new name for this palette")
+    newNamePrompt.className = "name-prompt"
+    newNamePrompt.appendChild(newNamePromptText)
+
+    let newNameField = document.createElement("input")
+    newNameField.type = "text"
+    newNameField.className = "form-field"
+    
+    newNameModal.appendChild(newNamePrompt)
+    newNameModal.appendChild(newNameField)
+    document.body.appendChild(newNameModal)
+
+    let newPaletteNameInput = paletteName.firstChild.value
+
+    this.editPalette(id)
   }
 
-  rerenderPalettes = (palettes) => {
-    this.palettes = []
-    palettes.data.forEach(palette => {
-      this.palettes.push(palette)
-    })
+  editPalette = (id) => {
+    console.log(id)
   }
-
-
 }

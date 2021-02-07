@@ -91,8 +91,41 @@ header {
   background-color: rgba(0,0,0,0.5);
   font-size: 8px;
   padding: 2px 3px;
-  border-left: 1px solid #000;
-  border-top: 1px solid #000;
+}
+
+.edit-button {
+  position: absolute;
+  z-index: 1;
+  background-color: rgba(255,255,255,0.5);
+  padding: 2px 3px;
+  font-size: 8px;
+  right: 29px;
+  bottom: 0;
+}
+
+.name-modal {
+  background-color: #FFF;
+  width: 400px;
+  height: 100px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 5px solid #000;
+  outline: 3px solid #FFF;
+  z-index: 2;
+}
+
+.name-modal .name-prompt {
+  text-align: center;
+  margin-top: `0px;
+}
+
+.name-modal .form-field {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 #generate-style-button-box {
