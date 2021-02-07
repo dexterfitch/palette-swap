@@ -251,12 +251,10 @@ class Palette {
     }
 
     if (name === "") {
-      alert("give us a name")
-      this.generateSaveButton()
+      alert("give us a name");
       return
     } else if (name.length > 16) {
-      alert("too long buddy, keep it less than 16 chars")
-      this.generateSaveButton()
+      alert("too long buddy, keep it less than 16 chars");
       return
     }
 
