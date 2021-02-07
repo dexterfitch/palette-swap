@@ -410,7 +410,7 @@ class Patterns {
   }
 
   parsePalette = () => {
-    let patternID = selectPatternDropdown.options.selectedIndex - 1
+    let patternID = selectPatternDropdown.options.selectedIndex
 
     let paletteNameInput = paletteName.firstChild.value
 
