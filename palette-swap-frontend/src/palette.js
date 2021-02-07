@@ -23,11 +23,13 @@ class Palette {
 
   filterPalettes = (selectedPatternId) => {
     window.selectedPatternId = selectedPatternId
+    let patternID = selectedPatternId
 
     let filteredPalettes = []
-    this.palettes.forEach(palette => {
-      if(palette.relationships.pattern.data.id === selectedPatternId) {
-        filteredPalettes.push(palette)
+
+    this.palettes.forEach(pal => {
+      if(pal.relationships.pattern.data.id == patternID) {
+        filteredPalettes.push(pal)
       }
     })
 

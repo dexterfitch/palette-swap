@@ -12,8 +12,9 @@ window.onload = function() {
   selectPatternDropdown.addEventListener("mouseup", e => {
     if (!(selectPatternDropdown.value === "")) {
       let selectedPattern = selectPatternDropdown.value
+      sessionStorage.setItem('selPatID', selectPatternDropdown.value)
 
-      patternStart.renderSelectedPattern(selectedPattern - 1)
+      patternStart.renderSelectedPattern(selectedPattern)
       paletteStart.filterPalettes(selectedPattern)
       paletteCSSBox.className = "hidden"
     }

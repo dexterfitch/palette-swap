@@ -3,7 +3,6 @@ class Patterns {
   constructor(name, style) {
     this.name = name;
     this.style = style;
-    this.palettes = [];
     this.patterns = [];
   }
 
@@ -36,7 +35,8 @@ class Patterns {
   }
 
   renderSelectedPattern = (selectedPatternId) => {
-    let currentPattern = this.patterns[selectedPatternId]
+    let currentPattern = this.patterns[selectedPatternId - 1]
+
     let currentPalettes = currentPattern.palettes
     let selectedPatternStyle = this.renderStyle(currentPattern, currentPattern.palettes[0].id)
 
@@ -431,6 +431,7 @@ class Patterns {
     this.createNewPalette(paletteNameInput, color1RGB, color2RGB, color3RGB, patternID).then(palette => {
       let newPalette = new Palette(palette)
       paletteStart.palettes.push(newPalette)
+      window.location.reload()
     })
   }
 
@@ -445,6 +446,9 @@ class Patterns {
 
     if (name === "") {
       alert("give us a name")
+      this.generateSaveButton()
+    } else if (name.length > 16) {
+      alert("too long buddy, keep it less than 16 chars")
       this.generateSaveButton()
     }
 
