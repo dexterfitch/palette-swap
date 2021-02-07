@@ -361,9 +361,26 @@ class Palette {
     let newNameField = document.createElement("input")
     newNameField.type = "text"
     newNameField.className = "form-field"
+
+    let saveEditButton = document.createElement("button")
+    let saveEditButtonText = document.createTextNode("Save")
+    saveEditButton.appendChild(saveEditButtonText)
+    saveEditButton.id = "save-edit"
+    saveEditButton.className = "btn btn-dark"
+
+    let closeModalButton = document.createElement("button")
+    let closeModalButtonText = document.createTextNode("✕")
+    closeModalButton.appendChild(closeModalButtonText)
+    closeModalButton.id = "close-modal"
+    closeModalButton.className = "btn btn-outline-dark"
+
+    closeModalButton.addEventListener("click", this.closeModal, false)
     
     newNameModal.appendChild(newNamePrompt)
     newNameModal.appendChild(newNameField)
+    newNameModal.appendChild(saveEditButton)
+    newNameModal.appendChild(closeModalButton)
+
     document.body.appendChild(newNameModal)
 
     let newPaletteNameInput = paletteName.firstChild.value
@@ -371,7 +388,11 @@ class Palette {
     this.editPalette(id)
   }
 
-  editPalette = (id) => {
-    console.log(id)
+  editPalette = () => {
+    console.log("button clicked")
+  }
+
+  closeModal = (event) => {
+    event.target.parentElement.remove()
   }
 }

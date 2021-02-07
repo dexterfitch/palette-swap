@@ -103,6 +103,14 @@ header {
   bottom: 0;
 }
 
+#save-edit {
+  position: absolute;
+  right: 49px;
+  padding: 5px;
+  bottom: 16px;
+  font-size: 12px;
+}
+
 .name-modal {
   background-color: #FFF;
   width: 400px;
@@ -118,14 +126,29 @@ header {
 
 .name-modal .name-prompt {
   text-align: center;
-  margin-top: `0px;
+  margin-top: 10px;
 }
 
 .name-modal .form-field {
   position: absolute;
   bottom: 12px;
-  left: 50%;
+  left: 45%;
   transform: translateX(-50%);
+}
+
+#close-modal {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  padding: 1px 2px;
+  line-height: 1;
+  z-index: 3;
+  background-color: #FFF;
+}
+
+#close-modal:hover {
+  color: red;
+  border-color: red;
 }
 
 #generate-style-button-box {
