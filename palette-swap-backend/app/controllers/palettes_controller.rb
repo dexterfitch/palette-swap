@@ -1,5 +1,5 @@
 class PalettesController < ApplicationController
-  before_action :set_palette, only: [:show, :destroy]
+  before_action :set_palette, only: [:show, :update, :destroy]
 
   def index
     palettes = Palette.all
@@ -20,8 +20,17 @@ class PalettesController < ApplicationController
     end
   end
 
+  def update
+    if @palette.update(palette_params)
+      render json: PaletteSerializer.new(@palette)
+    else
+      render json: @palette.errors, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     @palette.destroy
+    render json: {message: "Deleted!"}
   end
 
   private

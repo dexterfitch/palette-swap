@@ -348,7 +348,7 @@ class Palette {
   }
 
   createEditForm = (event) => {
-    let id = event.target.id.split('-')[2]
+    let paletteIDtoEdit = event.target.id.split('-')[2]
 
     let newNameModal = document.createElement("div")
     newNameModal.className = "name-modal"
@@ -360,7 +360,8 @@ class Palette {
 
     let newNameField = document.createElement("input")
     newNameField.type = "text"
-    newNameField.className = "form-field"
+    newNameField.className = "new-name form-field"
+    newNameField.id = `new-name-input-${paletteIDtoEdit}`
 
     let saveEditButton = document.createElement("button")
     let saveEditButtonText = document.createTextNode("Save")
@@ -383,16 +384,44 @@ class Palette {
 
     document.body.appendChild(newNameModal)
 
-    let newPaletteNameInput = paletteName.firstChild.value
-
-    this.editPalette(id)
+    saveEditButton.addEventListener("click", this.editPalette, false)
   }
 
-  editPalette = () => {
-    console.log("button clicked")
+  editPalette = (event) => {
+    let newName = document.getElementsByClassName("new-name form-field")[0]
+    let newNameInput = newName.value
+    let paletteIDToUpdate = newName.id.split("-")[3]
+
+    if (newNameInput === "") {
+      alert("give us a new name");
+      return
+    } else if (newNameInput.length > 16) {
+      alert("too long buddy, keep it less than 16 chars");
+      return
+    }
+
+    this.saveEdit(paletteIDToUpdate, newNameInput)
+
   }
 
   closeModal = (event) => {
     event.target.parentElement.remove()
+  }
+
+  saveEdit = (palette_id, new_palette_name) => {
+    let updatePaletteData = { 
+      "name": new_palette_name
+    }
+
+    fetch(PALETTES_URL + `/${palette_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(updatePaletteData)
+    })
+    .then(event.target.parentElement.remove())
+    .then(window.location.reload())
   }
 }
