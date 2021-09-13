@@ -24,11 +24,16 @@ header {
 }
 
 .color-value {
-  font-size: 10px;
+  font-size: 8px;
   border: 1px solid #000;
   width: 100%;
   text-align: center;
-  margin-top: 1px;
+  margin-top: 3px;
+  background: white;
+}
+
+.slider {
+  max-width: 100%;
 }
 
 .palette {
@@ -40,6 +45,7 @@ header {
 .palette-preview {
   margin-bottom: 24px;
   position: relative;
+  cursor: pointer;
 }
 
 .palette-preview .col-4:nth-child(1) {
@@ -92,9 +98,9 @@ header {
   z-index: 1;
   right: 12px;
   bottom: 0;
-  background-color: rgba(0,0,0,0.5);
-  font-size: 8px;
-  padding: 2px 3px;
+  background-color: rgb(255 0 0 / 50%);
+  font-size: 9px;
+  padding: 2px 4px 2px 3px;
 }
 
 .edit-button {

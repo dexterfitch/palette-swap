@@ -9,7 +9,7 @@ window.onload = function() {
   patternStart.getPatterns()
   paletteStart.getPalettes()
 
-  selectPatternDropdown.addEventListener("mouseup", e => {
+  selectPatternDropdown.addEventListener("change", e => {
     if (!(selectPatternDropdown.value === "")) {
       let selectedPattern = selectPatternDropdown.value
       sessionStorage.setItem('selPatID', selectPatternDropdown.value)

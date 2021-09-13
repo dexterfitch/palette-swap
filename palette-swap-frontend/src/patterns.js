@@ -169,7 +169,7 @@ class Patterns {
     }
   }
 
-  updateColorValues = () => {
+  updateColorValues = (event) => {
     let clickedSlider = event.target
 
     switch (clickedSlider.id) {

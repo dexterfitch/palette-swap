@@ -92,21 +92,21 @@ class Palette {
       paletteButtonSection.id = `palette-button-section-${paletteId}`
       palettePreview.appendChild(paletteButtonSection)
 
-      let editButton = document.createElement("button")
-      editButton.id = `edit-button-${paletteId}`
-      editButton.className = "btn btn-outline-dark edit-button"
+      // let editButton = document.createElement("button")
+      // editButton.id = `edit-button-${paletteId}`
+      // editButton.className = "btn btn-outline-dark edit-button"
 
-      let editButtonText = document.createTextNode("🖌️")
-      editButton.appendChild(editButtonText)
-      paletteButtonSection.appendChild(editButton)
+      // let editButtonText = document.createTextNode("🖌️")
+      // editButton.appendChild(editButtonText)
+      // paletteButtonSection.appendChild(editButton)
 
-      let deleteButton = document.createElement("button")
-      deleteButton.id = `delete-button-${paletteId}`
-      deleteButton.className = "btn btn-outline-dark delete-button"
+      // let deleteButton = document.createElement("button")
+      // deleteButton.id = `delete-button-${paletteId}`
+      // deleteButton.className = "btn btn-outline-dark delete-button"
 
-      let deleteButtonText = document.createTextNode("✖")
-      deleteButton.appendChild(deleteButtonText)
-      paletteButtonSection.appendChild(deleteButton)
+      // let deleteButtonText = document.createTextNode("✖")
+      // deleteButton.appendChild(deleteButtonText)
+      // paletteButtonSection.appendChild(deleteButton)
 
       palettePreviewColor1.appendChild(palettePreviewColor1Inner)
       palettePreviewColor2.appendChild(palettePreviewColor2Inner)
